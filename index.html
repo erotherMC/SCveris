@@ -119,6 +119,65 @@
       border-bottom: 1px solid var(--border);
     }
     ul.clean li:last-child { border-bottom: none; }
+    ul.clean li::before {
+      content: "▸";
+      color: var(--accent);
+      position: absolute;
+      left: 0;
+    }
+    .callout {
+      background: var(--accent-soft);
+      border-left: 4px solid var(--accent);
+      border-radius: 0 8px 8px 0;
+      padding: 1rem 1.25rem;
+      color: var(--text);
+    }
+    .links {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1rem;
+    }
+    a.linkcard {
+      display: block;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.1rem 1.25rem;
+      text-decoration: none;
+      color: var(--text);
+      transition: border-color .15s ease, transform .15s ease;
+    }
+    a.linkcard:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+    a.linkcard .title { color: var(--accent); font-weight: 600; display: block; margin-bottom: .25rem; }
+    a.linkcard .desc { color: var(--muted); font-size: .9rem; }
+    footer {
+      text-align: center;
+      padding: 2rem 1.5rem;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: .85rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-inner">
+      <div class="header-text">
+        <h1>SCveris Group</h1>
+        <p class="tagline">"Advancing quality. Everywhere."</p>
+        <p class="lead">
+          A demonstration instance of MasterControl Manufacturing (Mx), Quality (Qx),
+          and Asset Management (Ax), built around a fictional, diversified life sciences
+          and regulated manufacturing group.
+        </p>
+      </div>
+      <div class="logo-block">
+        <img src="/SCveris/SCveris%20Group%20Logo.png" alt="SCveris Group logo">
+      </div>
+    </div>
   </header>
 
   <div class="wrap">
