@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SCveris Group — MasterControl Demo Instance</title>
+  <style>
+    :root {
+      --bg: #0d1b2a;
+      --panel: #16273d;
+      --accent: #4da3ff;
+      --accent-soft: #1e3a5f;
+      --text: #e6edf5;
+      --muted: #9db2c9;
+      --border: #22374f;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+    header {
+      padding: 4rem 1.5rem 3rem;
+      text-align: center;
+      background: linear-gradient(160deg, #16273d 0%, #0d1b2a 100%);
+      border-bottom: 1px solid var(--border);
+    }
+    header h1 {
+      margin: 0 0 .5rem;
+      font-size: clamp(2rem, 5vw, 3rem);
+      letter-spacing: .5px;
+    }
+    header .tagline {
+      color: var(--accent);
+      font-style: italic;
+      font-size: 1.15rem;
+      margin: 0 0 1rem;
+    }
+    header p.lead {
+      max-width: 720px;
+      margin: 0 auto;
+      color: var(--muted);
+      font-size: 1.05rem;
+    }
+    .wrap { max-width: 960px; margin: 0 auto; padding: 2.5rem 1.5rem; }
+    section { margin-bottom: 3rem; }
+    h2 {
+      font-size: 1.4rem;
+      border-left: 4px solid var(--accent);
+      padding-left: .75rem;
+      margin-bottom: 1rem;
+    }
+    p { color: var(--text); }
+    .muted { color: var(--muted); }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem;
+    }
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.25rem;
+    }
+    .card h3 { margin: 0 0 .4rem; font-size: 1.05rem; color: var(--accent); }
+    .card p { margin: 0; color: var(--muted); font-size: .95rem; }
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 1rem;
+      text-align: center;
+    }
+    .stat {
+      background: var(--accent-soft);
+      border-radius: 10px;
+      padding: 1.25rem .75rem;
+    }
+    .stat .num { font-size: 1.8rem; font-weight: 700; color: #fff; }
+    .stat .label { font-size: .85rem; color: var(--muted); text-transform: uppercase; letter-spacing: .5px; }
+    ul.clean { list-style: none; padding: 0; margin: 0; }
+    ul.clean li {
+      padding: .5rem 0 .5rem 1.5rem;
+      position: relative;
+      border-bottom: 1px solid var(--border);
+    }
+    ul.clean li:last-child { border-bottom: none; }
+    ul.clean li::before {
+      content: "▸";
+      color: var(--accent);
+      position: absolute;
+      left: 0;
+    }
+    .callout {
+      background: var(--accent-soft);
+      border-left: 4px solid var(--accent);
+      border-radius: 0 8px 8px 0;
+      padding: 1rem 1.25rem;
+      color: var(--text);
+    }
+    footer {
+      text-align: center;
+      padding: 2rem 1.5rem;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: .85rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>SCveris Group</h1>
+    <p class="tagline">"Advancing quality. Everywhere."</p>
+    <p class="lead">
+      A demonstration instance of MasterControl Manufacturing (Mx), Quality (Qx),
+      and Analytics (Ax), built around a fictional, diversified life sciences and
+      regulated manufacturing group.
+    </p>
+  </header>
+
+  <div class="wrap">
+
+    <section>
+      <h2>What is SCveris?</h2>
+      <p>
+        SCveris Group is a <strong>fictional company</strong> created as a flexible demo
+        environment. It represents a publicly listed, EMEA-headquartered conglomerate
+        that operates across several distinct regulated industries under one roof, giving
+        us a single, believable enterprise to showcase the platform.
+      </p>
+      <p class="muted">
+        It is deliberately broad: large enough to reflect the complexity of a global
+        enterprise, yet structured so that any prospect can recognise themselves in one
+        of its divisions.
+      </p>
+    </section>
+
+    <section>
+      <h2>What is it for?</h2>
+      <p>
+        SCveris exists to <strong>demonstrate MasterControl to any regulated manufacturing
+        prospect</strong> without rebuilding the environment each time. One instance can be
+        framed to mirror the audience in the room.
+      </p>
+      <div class="callout">
+        <strong>Same instance. Same data. Different lens.</strong><br>
+        A pharma manufacturer sees traditional pharma. A biotech sees biologics. A device
+        maker, diagnostics lab, or food producer each sees their own world, all from the
+        same demo.
+      </div>
+    </section>
+
+    <section>
+      <h2>At a glance</h2>
+      <div class="stats">
+        <div class="stat"><div class="num">4</div><div class="label">Divisions</div></div>
+        <div class="stat"><div class="num">9</div><div class="label">Sites</div></div>
+        <div class="stat"><div class="num">7</div><div class="label">Countries</div></div>
+        <div class="stat"><div class="num">~18k</div><div class="label">Employees</div></div>
+        <div class="stat"><div class="num">~€4.2B</div><div class="label">Revenue</div></div>
+      </div>
+    </section>
+
+    <section>
+      <h2>The four divisions</h2>
+      <div class="grid">
+        <div class="card">
+          <h3>SCveris Pharma</h3>
+          <p>Traditional small molecule plus a full-spectrum biopharma arm (biologics, cell &amp; gene therapy, vaccines, plasma, tissues).</p>
+        </div>
+        <div class="card">
+          <h3>SCveris MedTech</h3>
+          <p>Medical devices manufacturing.</p>
+        </div>
+        <div class="card">
+          <h3>SCveris Diagnostics</h3>
+          <p>In vitro diagnostics and reagent kits.</p>
+        </div>
+        <div class="card">
+          <h3>SCveris Nutrition</h3>
+          <p>Food, beverage, and nutritional products.</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>What it demonstrates</h2>
+      <ul class="clean">
+        <li>Paperless electronic batch records across every dosage form and product type</li>
+        <li>Risk-based release and faster, better-informed batch disposition</li>
+        <li>Native links between manufacturing execution, procedures, and training</li>
+        <li>Live manufacturing KPIs, quality trends, and analytics dashboards</li>
+        <li>Equipment logbooks and asset status connected to production in real time</li>
+        <li>Complex, specialised manufacturing scenarios across multiple industries</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Where to find the detail</h2>
+      <p class="muted">
+        This page is a high-level overview only. For specifics on corporate structure,
+        sites, products, personas, procedures, workflows, and demo scripts, refer to the
+        individual one-pagers that accompany this instance.
+      </p>
+    </section>
+
+  </div>
+
+  <footer>
+    SCveris Group Demo Instance &middot; MasterControl Mx / Qx / Ax<br>
+    For demonstration purposes only. SCveris Group is a fictional company.
+  </footer>
+</body>
+</html>
