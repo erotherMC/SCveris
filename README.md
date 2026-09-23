@@ -11,7 +11,7 @@ published via GitHub Pages.
 
 SCveris Group is a **fictional** diversified life sciences and regulated
 manufacturing conglomerate, created as a flexible demonstration environment for
-MasterControl Manufacturing (Mx), Quality (Qx), and Analytics (Ax).
+MasterControl Manufacturing (Mx), Quality (Qx), and Asset Management (Ax).
 
 This repository hosts the public-facing overview page plus a set of one-pagers
 that provide the detail behind the demo instance.
