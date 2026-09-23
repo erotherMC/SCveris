@@ -7,21 +7,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SCveris Group — MasterControl Demo Instance</title>
   <style>
-        .logo-block {
-      max-width: 960px;
-      margin: 2rem auto 0;
-      padding: 2rem 1.5rem;
-      background: var(--panel);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      text-align: center;
-    }
-    .logo-block img {
-      max-width: 320px;
-      width: 60%;
-      height: auto;
-      display: inline-block;
-    }
     :root {
       --bg: #0d1b2a;
       --panel: #16273d;
@@ -40,11 +25,19 @@
       line-height: 1.6;
     }
     header {
-      padding: 4rem 1.5rem 3rem;
-      text-align: center;
+      padding: 3.5rem 1.5rem;
       background: linear-gradient(160deg, #16273d 0%, #0d1b2a 100%);
       border-bottom: 1px solid var(--border);
     }
+    .header-inner {
+      max-width: 960px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2.5rem;
+    }
+    .header-text { flex: 1 1 auto; text-align: left; }
     header h1 {
       margin: 0 0 .5rem;
       font-size: clamp(2rem, 5vw, 3rem);
@@ -57,10 +50,31 @@
       margin: 0 0 1rem;
     }
     header p.lead {
-      max-width: 720px;
-      margin: 0 auto;
+      max-width: 560px;
+      margin: 0;
       color: var(--muted);
       font-size: 1.05rem;
+    }
+    .logo-block {
+      flex: 0 0 auto;
+      padding: 1.5rem;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .logo-block img {
+      width: 180px;
+      max-width: 40vw;
+      height: auto;
+      display: block;
+    }
+    @media (max-width: 700px) {
+      .header-inner { flex-direction: column; text-align: center; }
+      .header-text { text-align: center; }
+      header p.lead { margin: 0 auto; }
     }
     .wrap { max-width: 960px; margin: 0 auto; padding: 2.5rem 1.5rem; }
     section { margin-bottom: 3rem; }
@@ -105,63 +119,7 @@
       border-bottom: 1px solid var(--border);
     }
     ul.clean li:last-child { border-bottom: none; }
-    ul.clean li::before {
-      content: "▸";
-      color: var(--accent);
-      position: absolute;
-      left: 0;
-    }
-    .callout {
-      background: var(--accent-soft);
-      border-left: 4px solid var(--accent);
-      border-radius: 0 8px 8px 0;
-      padding: 1rem 1.25rem;
-      color: var(--text);
-    }
-    .links {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 1rem;
-    }
-    a.linkcard {
-      display: block;
-      background: var(--panel);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 1.1rem 1.25rem;
-      text-decoration: none;
-      color: var(--text);
-      transition: border-color .15s ease, transform .15s ease;
-    }
-    a.linkcard:hover {
-      border-color: var(--accent);
-      transform: translateY(-2px);
-    }
-    a.linkcard .title { color: var(--accent); font-weight: 600; display: block; margin-bottom: .25rem; }
-    a.linkcard .desc { color: var(--muted); font-size: .9rem; }
-    footer {
-      text-align: center;
-      padding: 2rem 1.5rem;
-      border-top: 1px solid var(--border);
-      color: var(--muted);
-      font-size: .85rem;
-    }
-  </style>
-</head>
-<body>
-  <header>
-    <h1>SCveris Group</h1>
-    <p class="tagline">"Advancing quality. Everywhere."</p>
-    <p class="lead">
-      A demonstration instance of MasterControl Manufacturing (Mx), Quality (Qx),
-      and Asset Management (Ax), built around a fictional, diversified life sciences and
-      regulated manufacturing group.
-    </p>
   </header>
-
-    <div class="logo-block">
-    <img src="/SCveris/SCveris Group Logo.png" alt="SCveris Group logo">
-  </div>
 
   <div class="wrap">
 
