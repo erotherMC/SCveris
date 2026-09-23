@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SCveris Group — AQEM Workflow Strategy</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy:   #0B1F3A;
+    --blue:   #1A4B8C;
+    --accent: #2E7FD4;
+    --light:  #E8F0FA;
+    --silver: #C8D5E8;
+    --mid:    #6B82A0;
+    --white:  #FFFFFF;
+    --text:   #1C2B3A;
+    --muted:  #4A6080;
+    --border: #D0DCEC;
+    --teal:   #0E7E82;
+    --orange: #E8A020;
+  }
+
+  html { font-size: 13px; }
+
+  body {
+    font-family: 'Inter', 'Helvetica Neue', sans-serif;
+    background: #F0F4FA;
+    color: var(--text);
+    line-height: 1.55;
+    padding: 32px 20px;
+  }
+
+  .page {
+    max-width: 1100px;
+    margin: 0 auto;
+    background: var(--white);
+    box-shadow: 0 4px 32px rgba(11,31,58,0.13);
+  }
+
+  /* ── HEADER ── */
+  .header { display: flex; align-items: stretch; }
+
+  .header-logo {
+    background: var(--white);
+    padding: 14px 28px;
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    border-right: 4px solid var(--accent);
+  }
+
+  .logo-type { display: flex; flex-direction: column; line-height: 1; gap: 2px; }
+  .logo-main { display: flex; align-items: baseline; }
+  .logo-sc    { font-size: 3.2rem; font-weight: 800; color: var(--navy); letter-spacing: -2px; line-height: 1; }
+  .logo-veris { font-size: 1.6rem; font-weight: 300; color: var(--accent); letter-spacing: 1px; line-height: 1; padding-bottom: 4px; }
+  .logo-group { font-size: 0.6rem; font-weight: 600; letter-spacing: 4px; text-transform: uppercase; color: var(--mid); padding-left: 2px; }
+
+  .header-right {
+    background: var(--navy);
+    flex: 1;
+    padding: 20px 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 6px;
+  }
+
+  .header-title {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--white);
+    letter-spacing: 0.3px;
+  }
+
+  .header-sub {
+    font-size: 0.82rem;
+    font-weight: 400;
+    color: var(--silver);
+  }
+
+  .header-badges {
+    display: flex;
+    gap: 8px;
+    margin-top: 4px;
+    flex-wrap: wrap;
+  }
+
+  .badge {
+    display: inline-block;
+    background: rgba(46,127,212,0.18);
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    padding: 3px 10px;
+    border-radius: 3px;
+    text-transform: uppercase;
+  }
+
+  /* ── STATS STRIPE ── */
+  .stripe {
+    background: var(--blue);
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+  }
+
+  .stat {
+    padding: 14px 20px;
+    text-align: center;
+    border-right: 1px solid rgba(255,255,255,0.1);
+  }
+  .stat:last-child { border-right: none; }
+  .stat-value { font-size: 1.4rem; font-weight: 800; color: var(--white); line-height: 1; }
+  .stat-label { font-size: 0.62rem; font-weight: 500; color: var(--silver); letter-spacing: 1px; text-transform: uppercase; margin-top: 4px; }
+
+  /* ── BODY ── */
+  .body { padding: 36px 44px; }
+
+  .section-title {
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 14px;
+    margin-top: 32px;
+  }
+  .section-title:first-child { margin-top: 0; }
+
+  /* ── PHILOSOPHY BOX ── */
+  .philosophy {
+    background: var(--light);
+    border-left: 4px solid var(--accent);
+    padding: 14px 18px;
+    margin-bottom: 28px;
+    font-size: 0.82rem;
+    line-height: 1.65;
+    color: var(--text);
+  }
+  .philosophy strong { color: var(--navy); }
+
+  /* ── ARCHITECTURE DIAGRAM ── */
+  .architecture {
+    background: var(--navy);
+    color: var(--white);
+    border-radius: 4px;
+    padding: 20px 24px;
+    margin-bottom: 32px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.78rem;
+    line-height: 1.7;
+    white-space: pre;
+    overflow-x: auto;
+  }
+  .architecture .hl   { color: #7EC8E3; font-weight: 700; }
+  .architecture .dim  { color: rgba(255,255,255,0.4); }
+  .architecture .bold { color: var(--white); font-weight: 600; }
+
+  /* ── WORKFLOW GRID ── */
+  .workflow-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 32px;
+  }
+
+  .wf-card {
+    border: 1px solid var(--border);
+    border-top: 3px solid var(--accent);
+    background: #FAFCFF;
+    padding: 12px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .wf-card.front-door { border-top-color: var(--accent); }
+  .wf-card.internal   { border-top-color: var(--navy); }
+  .wf-card.external   { border-top-color: var(--orange); }
+
+  .wf-card h4 {
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--navy);
+  }
+  .wf-card h4 .wf-num { color: var(--accent); }
+  .wf-card.internal h4 .wf-num { color: var(--blue); }
+  .wf-card.external h4 .wf-num { color: var(--orange); }
+
+  .wf-purpose {
+    font-size: 0.71rem;
+    color: var(--muted);
+    font-style: italic;
+  }
+
+  .stages {
+    font-size: 0.71rem;
+    line-height: 1.55;
+    color: var(--text);
+  }
+  .stages .arrow { color: var(--accent); font-weight: 700; margin: 0 2px; }
+  .stages .gate  { color: var(--teal); font-weight: 600; font-size: 0.67rem; }
+
+  .wf-meta {
+    font-size: 0.68rem;
+    color: var(--muted);
+    border-top: 1px solid var(--border);
+    padding-top: 5px;
+    margin-top: 2px;
+  }
+  .wf-meta span { margin-right: 10px; }
+  .wf-meta strong { color: var(--text); font-weight: 600; }
+
+  /* ── TABLES ── */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.73rem;
+    margin-bottom: 32px;
+  }
+  thead tr { background: var(--navy); }
+  thead th {
+    color: var(--silver);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    font-size: 0.62rem;
+    padding: 8px 10px;
+    text-align: left;
+  }
+  tbody tr { border-bottom: 1px solid var(--border); }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: var(--light); }
+  td {
+    padding: 7px 10px;
+    vertical-align: top;
+    color: var(--text);
+  }
+  td.wf-name {
+    font-weight: 700;
+    color: var(--accent);
+    white-space: nowrap;
+  }
+  td.persona { font-weight: 600; color: var(--navy); }
+
+  /* ── PRINCIPLES ── */
+  .principles {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 8px;
+  }
+  .principle {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 0.73rem;
+    line-height: 1.55;
+    color: var(--muted);
+  }
+  .principle .num {
+    flex-shrink: 0;
+    width: 22px;
+    height: 22px;
+    background: var(--accent);
+    color: var(--white);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.65rem;
+    font-weight: 700;
+    margin-top: 1px;
+  }
+  .principle strong { color: var(--navy); }
+
+  /* ── FOOTER ── */
+  .footer {
+    background: var(--navy);
+    padding: 18px 44px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+  .footer-left { font-size: 0.72rem; color: var(--silver); }
+  .footer-left strong { color: var(--white); }
+  .footer-center {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(46,127,212,0.15);
+    border: 1px solid rgba(46,127,212,0.4);
+    border-radius: 3px;
+    padding: 4px 12px;
+    font-size: 0.68rem;
+    font-weight: 600;
+    color: var(--accent);
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+  .footer-right {
+    font-size: 0.65rem;
+    color: var(--mid);
+    text-align: right;
+    font-style: italic;
+  }
+
+  @media (max-width: 860px) {
+    .header { flex-direction: column; }
+    .header-logo { border-right: none; border-bottom: 4px solid var(--accent); justify-content: center; }
+    .stripe { grid-template-columns: repeat(3, 1fr); }
+    .workflow-grid { grid-template-columns: 1fr; }
+    .principles { grid-template-columns: 1fr; }
+    .body { padding: 24px 20px; }
+    .footer { flex-direction: column; align-items: flex-start; padding: 16px 20px; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-logo">
+      <div class="logo-type">
+        <div class="logo-main">
+          <span class="logo-sc">SC</span><span class="logo-veris">veris</span>
+        </div>
+        <div class="logo-group">Group AG</div>
+      </div>
+    </div>
+    <div class="header-right">
+      <div class="header-title">AQEM Workflow Strategy — Quality Event Management</div>
+      <div class="header-sub">MasterControl AQEM &nbsp;·&nbsp; 10 Workflow Types &nbsp;·&nbsp; All Divisions &nbsp;·&nbsp; All Sites &nbsp;·&nbsp; September 2026</div>
+      <div class="header-badges">
+        <span class="badge">MFG Issue Report</span>
+        <span class="badge">Deviation &amp; CAPA</span>
+        <span class="badge">Change Control</span>
+        <span class="badge">Supplier &amp; Audit</span>
+        <span class="badge">Market Action</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- STATS STRIPE -->
+  <div class="stripe">
+    <div class="stat">
+      <div class="stat-value">10</div>
+      <div class="stat-label">Workflow Types</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value">1</div>
+      <div class="stat-label">Front Door</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value">6</div>
+      <div class="stat-label">Internal Flows</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value">3</div>
+      <div class="stat-label">External Flows</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value">24h</div>
+      <div class="stat-label">Triage SLA</div>
+    </div>
+  </div>
+
+  <!-- BODY -->
+  <div class="body">
+
+    <!-- PHILOSOPHY -->
+    <div class="philosophy">
+      <strong>The MFG Issue Report is the front door.</strong> Any operator can create one — low barrier, no classification required. QA experts triage within 24 hours and route to the correct quality workflow. Events escalate and cascade: Deviation → CAPA → Change Control → Document Revision → Training Assignment — all connected, all traceable in AQEM.
+    </div>
+
+    <!-- ARCHITECTURE -->
+    <div class="section-title">Master Workflow Architecture</div>
+    <div class="architecture"><span class="bold">Shop Floor Event</span>
+  <span class="dim">│</span>
+  <span class="dim">└──</span> <span class="hl">1. MFG Issue Report</span>  <span class="dim">(anyone can create)</span>
+        <span class="dim">│</span>
+        <span class="dim">├──</span> <span class="bold">QA Triage</span>
+        <span class="dim">│     ├──</span> <span class="dim">CLOSE (informational / false alarm)</span>
+        <span class="dim">│     ├──→</span> <span class="hl">2. Deviation</span> <span class="dim">──→</span> <span class="hl">5. CAPA</span>
+        <span class="dim">│     ├──→</span> <span class="hl">3. Nonconformance</span> <span class="dim">──→</span> <span class="hl">8. SCAR</span>
+        <span class="dim">│     └──→</span> <span class="hl">4. OOS Investigation</span> <span class="dim">──→ 2. or 5.</span>
+        <span class="dim">│</span>
+<span class="bold">External Inputs</span>
+  <span class="dim">├──</span> <span class="hl">7. Customer Complaint</span> <span class="dim">──→</span> <span class="hl">5. CAPA</span> <span class="dim">or</span> <span class="hl">10. Market Action</span>
+  <span class="dim">└──</span> <span class="hl">9. Audit Observation</span> <span class="dim">──→</span> <span class="hl">5. CAPA</span>
+
+<span class="bold">From any CAPA</span> <span class="dim">──→</span> <span class="hl">6. Change Control</span> <span class="dim">──→ Qx Doc Revision ──→ Qx Training</span></div>
+
+    <!-- 10 WORKFLOWS -->
+    <div class="section-title">The 10 AQEM Workflows</div>
+    <div class="workflow-grid">
+
+      <div class="wf-card front-door">
+        <h4><span class="wf-num">1.</span> MFG Issue Report</h4>
+        <div class="wf-purpose">The front door — low barrier, any operator</div>
+        <div class="stages">
+          Initiation<span class="arrow"> → </span>QA Triage<span class="arrow"> → </span><span class="gate">[Close / DEV / NC / OOS]</span>
+        </div>
+        <div class="wf-meta">
+          <span><strong>Owner:</strong> QA (triage)</span>
+          <span><strong>Initiator:</strong> Any operator</span>
+          <span><strong>SLA:</strong> Triage 24h</span>
+        </div>
+      </div>
+
+      <div class="wf-card internal">
+        <h4><span class="wf-num">2.</span> Deviation</h4>
+        <div class="wf-purpose">Unplanned departure from SOP, spec, or expected outcome</div>
+        <div class="stages">
+          Initiation<span class="arrow"> → </span>Correction<span class="arrow"> → </span>Investigation<span class="arrow"> → </span>Risk Assessment<span class="arrow"> → </span><span class="gate">[Close / CAPA]</span>
+        </div>
+        <div class="wf-meta">
+          <span><strong>Owner:</strong> Mace Windu</span>
+          <span><strong>SLA:</strong> Investigation 15 days</span>
+        </div>
+      </div>
+
+      <div class="wf-card internal">
+        <h4><span class="wf-num">3.</span> Nonconformance</h4>
+        <div class="wf-purpose">Material or product failing specification</div>
+        <div class="stages">
+          Initiation<span class="arrow"> → </span>Investigation<span class="arrow"> → </span>Disposition<span class="arrow"> → </span><span class="gate">[Reject / Rework / Use-As-Is]</span><span class="arrow"> → </span><span class="gate">[SCAR? / CAPA?]</span>
+        </div>
+        <div class="wf-meta">
+          <span><strong>Owner:</strong> Mace Windu</span>
+          <span><strong>SLA:</strong> Disposition 5 days</span>
+        </div>
+      </div>
+
+      <div class="wf-card internal">
+        <h4><span class="wf-num">4.</span> OOS Investigation</h4>
+        <div class="wf-purpose">Out-of-specification lab result — structured phase-based</div>
+        <div class="stages">
+          Notification<span class="arrow"> → </span>Phase I (Lab)<span class="arrow"> → </span><span class="gate">[Lab error? Y→Close]</span><span class="arrow"> → </span>Phase II (Full)<span class="arrow"> → </span>Disposition
+        </div>
+        <div class="wf-meta">
+          <span><strong>Owner:</strong> QC Supervisor</span>
+          <span><strong>SLA:</strong> Phase I: 3 days, Phase II: 20 days</span>
+        </div>
+      </div>
+
+      <div class="wf-card internal">
+        <h4><span class="wf-num">5.</span> CAPA</h4>
+        <div class="wf-purpose">Root cause + corrective/preventive actions — the systemic fix</div>
+        <div class="stages">
+          Initiation<span class="arrow"> → </span>Root Cause<span class="arrow"> → </span>Action Plan<span class="arrow"> → </span>Implementation<span class="arrow"> → </span>Effectiveness<span class="arrow"> → </span><span class="gate">[30/60/90d]</span>
+        </div>
+        <div class="wf-meta">
+          <span><strong>Owner:</strong> Padmé Amidala</span>
+          <span><strong>Approver:</strong> VP Quality</span>
+          <span><strong>Can trigger:</strong> Change Control</span>
+        </div>
+      </div>
+
+      <div class="wf-card internal">
+        <h4><span class="wf-num">6.</span> Change Control</h4>
+        <div class="wf-purpose">Controlled change to process, document, equipment, or material</div>
+        <div class="stages">
+          Proposal<span class="arrow"> → </span>Impact Assessment<span class="arrow"> → </span>Approval<span class="arrow"> → </span>Implementation<span class="arrow"> → </span>Verification
+        </div>
+        <div class="wf-meta">
+          <span><strong>Owner:</strong> Process Owner</span>
+          <span><strong>Qx Integration:</strong> Auto doc revision + training assignment</span>
+        </div>
+      </div>
+
+      <div class="wf-card external">
+        <h4><span class="wf-num">7.</span> Customer Complaint</h4>
+        <div class="wf-purpose">External complaint — intake, investigate, respond</div>
+        <div class="stages">
+          Intake<span class="arrow"> → </span>Classification<span class="arrow"> → </span>Investigation<span class="arrow"> → </span>Response<span class="arrow"> → </span><span class="gate">[CAPA? / Market Action?]</span>
+        </div>
+        <div class="wf-meta">
+          <span><strong>Owner:</strong> Leia Organa (RA)</span>
+          <span><strong>SLA:</strong> Intake 24h, Investigation 30 days</span>
+        </div>
+      </div>
+
+      <div class="wf-card internal">
+        <h4><span class="wf-num">8.</span> SCAR</h4>
+        <div class="wf-purpose">Supplier Corrective Action Request</div>
+        <div class="stages">
+          Issuance<span class="arrow"> → </span>Supplier Response<span class="arrow"> → </span><span class="gate">[Adequate?]</span><span class="arrow"> → </span>Verification<span class="arrow"> → </span>Close
+        </div>
+        <div class="wf-meta">
+          <span><strong>Owner:</strong> Han Solo</span>
+          <span><strong>SLA:</strong> Supplier response 30 days</span>
+        </div>
+      </div>
+
+      <div class="wf-card external">
+        <h4><span class="wf-num">9.</span> Audit Observation</h4>
+        <div class="wf-purpose">Internal/external audit finding requiring response</div>
+        <div class="stages">
+          Finding<span class="arrow"> → </span>Response Plan<span class="arrow"> → </span>Implementation<span class="arrow"> → </span>Verification<span class="arrow"> → </span><span class="gate">[CAPA?]</span>
+        </div>
+        <div class="wf-meta">
+          <span><strong>Initiator:</strong> C-3PO (auditor)</span>
+          <span><strong>Owner:</strong> Mace Windu</span>
+        </div>
+      </div>
+
+      <div class="wf-card external">
+        <h4><span class="wf-num">10.</span> Market Action / Field Safety</h4>
+        <div class="wf-purpose">Recall, field correction, or safety notification — the nuclear option</div>
+        <div class="stages">
+          Signal<span class="arrow"> → </span>Classification<span class="arrow"> → </span>Regulatory Notification<span class="arrow"> → </span>Execution<span class="arrow"> → </span>Effectiveness
+        </div>
+        <div class="wf-meta">
+          <span><strong>Owner:</strong> Padmé + Leia</span>
+          <span><strong>Approver:</strong> Mon Mothma (CEO)</span>
+          <span><strong>SLA:</strong> Class I notification 24h</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- RELATIONSHIP TABLE -->
+    <div class="section-title">Workflow Relationships</div>
+    <table>
+      <thead>
+        <tr>
+          <th>Workflow</th>
+          <th>Initiated From</th>
+          <th>Can Escalate To</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td class="wf-name">MFG Issue Report</td><td>Direct (shop floor)</td><td>Deviation, NC, OOS, or Close</td></tr>
+        <tr><td class="wf-name">Deviation</td><td>MFG Issue Report, direct</td><td>CAPA</td></tr>
+        <tr><td class="wf-name">Nonconformance</td><td>MFG Issue Report, incoming QC, direct</td><td>SCAR, CAPA</td></tr>
+        <tr><td class="wf-name">OOS Investigation</td><td>Lab result (direct)</td><td>Deviation, CAPA</td></tr>
+        <tr><td class="wf-name">CAPA</td><td>Deviation, NC, OOS, Complaint, Audit</td><td>Change Control</td></tr>
+        <tr><td class="wf-name">Change Control</td><td>CAPA, standalone</td><td>Qx Doc Revision → Qx Training</td></tr>
+        <tr><td class="wf-name">Customer Complaint</td><td>External report</td><td>CAPA, Market Action</td></tr>
+        <tr><td class="wf-name">SCAR</td><td>NC, Supplier Audit</td><td>—</td></tr>
+        <tr><td class="wf-name">Audit Observation</td><td>Internal / External Audit</td><td>CAPA</td></tr>
+        <tr><td class="wf-name">Market Action</td><td>Complaint, Deviation trend, Regulatory signal</td><td>—</td></tr>
+      </tbody>
+    </table>
+
+    <!-- PERSONA OWNERSHIP -->
+    <div class="section-title">Workflow → Persona Ownership</div>
+    <table>
+      <thead>
+        <tr>
+          <th>Workflow</th>
+          <th>Primary Owner</th>
+          <th>Approver</th>
+          <th>Initiator</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td class="wf-name">MFG Issue Report</td><td>QA (triage)</td><td>—</td><td>Any operator (Rey, Ahsoka, Luke, Cassian)</td></tr>
+        <tr><td class="wf-name">Deviation</td><td class="persona">Mace Windu</td><td class="persona">Mace Windu</td><td>QA</td></tr>
+        <tr><td class="wf-name">Nonconformance</td><td class="persona">Mace Windu</td><td class="persona">Mace Windu</td><td>QC / QA</td></tr>
+        <tr><td class="wf-name">OOS Investigation</td><td>QC Supervisor</td><td class="persona">Mace Windu</td><td>QC Analyst</td></tr>
+        <tr><td class="wf-name">CAPA</td><td class="persona">Padmé Amidala</td><td class="persona">Padmé Amidala</td><td>QA (from source event)</td></tr>
+        <tr><td class="wf-name">Change Control</td><td>Process Owner (Han Solo / Ahsoka)</td><td class="persona">Padmé Amidala</td><td>CAPA owner or direct</td></tr>
+        <tr><td class="wf-name">Customer Complaint</td><td class="persona">Leia Organa</td><td class="persona">Padmé Amidala</td><td>RA / QA</td></tr>
+        <tr><td class="wf-name">SCAR</td><td class="persona">Han Solo</td><td class="persona">Mace Windu</td><td>QA / Supply Chain</td></tr>
+        <tr><td class="wf-name">Audit Observation</td><td class="persona">Mace Windu</td><td class="persona">Padmé Amidala</td><td>C-3PO (auditor)</td></tr>
+        <tr><td class="wf-name">Market Action</td><td class="persona">Padmé Amidala + Leia Organa</td><td class="persona">Mon Mothma (CEO)</td><td>RA / QA</td></tr>
+      </tbody>
+    </table>
+
+    <!-- CONFIGURATION PRINCIPLES -->
+    <div class="section-title">Configuration Principles</div>
+    <div class="principles">
+      <div class="principle">
+        <div class="num">1</div>
+        <div><strong>MFG Issue Report is the front door.</strong> Operators should never hesitate to report. No classification required at initiation. QA triages within 24h.</div>
+      </div>
+      <div class="principle">
+        <div class="num">2</div>
+        <div><strong>Every workflow links back.</strong> No orphan events. Every CAPA traces to a source. Every Change Control traces to a CAPA or business justification.</div>
+      </div>
+      <div class="principle">
+        <div class="num">3</div>
+        <div><strong>Escalation, not duplication.</strong> When an MFG Issue Report becomes a Deviation, the original links — data carries forward, nothing is re-entered.</div>
+      </div>
+      <div class="principle">
+        <div class="num">4</div>
+        <div><strong>SLAs are configurable but defaulted.</strong> Triage: 24h. Investigation: 15 days. CAPA effectiveness: 30/60/90 days. Starting points, not hard limits.</div>
+      </div>
+      <div class="principle">
+        <div class="num">5</div>
+        <div><strong>Qx integration is automatic.</strong> Change Controls that revise documents auto-trigger training in Qx. The most powerful cross-module demo moment.</div>
+      </div>
+      <div class="principle">
+        <div class="num">6</div>
+        <div><strong>Risk-based classification.</strong> Minor deviations close without CAPA. Major/Critical require CAPA assessment. Not everything needs the full cascade.</div>
+      </div>
+      <div class="principle">
+        <div class="num">7</div>
+        <div><strong>Market Action is the nuclear option.</strong> Requires CEO approval (Mon Mothma) and regulatory notification. Exists for completeness — rarely the primary demo path.</div>
+      </div>
+    </div>
+
+  </div><!-- /body -->
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div class="footer-left">
+      <strong>SCveris Group AG</strong> &nbsp;·&nbsp;
+      AQEM Workflow Strategy — MasterControl Demo Instance &nbsp;·&nbsp;
+      <span style="color:var(--mid)">10 Workflow Types &nbsp;·&nbsp; September 2026</span>
+    </div>
+    <div class="footer-center">Powered by MasterControl</div>
+    <div class="footer-right">
+      For demonstration purposes only.<br/>
+      <span style="font-size:0.6rem;">All workflows are fictional and created for the SCveris Group demo instance.</span>
+    </div>
+  </div>
+
+</div><!-- /page -->
+</body>
+</html>
+
+

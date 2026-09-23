@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SCveris Group — SOP Library</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:   #0B1F3A;
+      --blue:   #1A4B8C;
+      --accent: #2E7FD4;
+      --light:  #E8F0FA;
+      --silver: #C8D5E8;
+      --mid:    #6B82A0;
+      --white:  #FFFFFF;
+      --text:   #1C2B3A;
+      --muted:  #4A6080;
+      --border: #D0DCEC;
+      --green:  #0E7E5E;
+      --teal:   #0E7E82;
+      --purple: #7A3D8A;
+      --orange: #B8632C;
+    }
+
+    html { font-size: 13px; }
+
+    body {
+      font-family: 'Inter', 'Helvetica Neue', sans-serif;
+      background: #F0F4FA;
+      color: var(--text);
+      line-height: 1.55;
+      padding: 32px 20px;
+    }
+
+    .page {
+      max-width: 1060px;
+      margin: 0 auto;
+      background: var(--white);
+      box-shadow: 0 4px 32px rgba(11,31,58,0.13);
+    }
+
+    /* ── HEADER ── */
+    .header { display: flex; align-items: stretch; }
+
+    .header-logo {
+      background: var(--white);
+      padding: 14px 28px;
+      display: flex;
+      align-items: center;
+      flex-shrink: 0;
+      border-right: 4px solid var(--accent);
+    }
+
+    .logo-type { display: flex; flex-direction: column; line-height: 1; gap: 2px; }
+    .logo-main { display: flex; align-items: baseline; }
+    .logo-sc   { font-size: 3.2rem; font-weight: 800; color: var(--navy); letter-spacing: -2px; line-height: 1; }
+    .logo-veris { font-size: 1.6rem; font-weight: 300; color: var(--accent); letter-spacing: 1px; line-height: 1; padding-bottom: 4px; }
+    .logo-group { font-size: 0.6rem; font-weight: 600; letter-spacing: 4px; text-transform: uppercase; color: var(--mid); padding-left: 2px; }
+
+    .header-right {
+      background: var(--navy);
+      flex: 1;
+      padding: 20px 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .header-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--white);
+      letter-spacing: 0.3px;
+    }
+
+    .header-sub {
+      font-size: 0.82rem;
+      font-weight: 400;
+      color: var(--silver);
+    }
+
+    .header-badges {
+      display: flex;
+      gap: 8px;
+      margin-top: 4px;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      display: inline-block;
+      background: rgba(46,127,212,0.18);
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+      padding: 3px 10px;
+      border-radius: 3px;
+      text-transform: uppercase;
+    }
+
+    /* ── STATS STRIPE ── */
+    .stripe {
+      background: var(--blue);
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+    }
+
+    .stat {
+      padding: 14px 20px;
+      text-align: center;
+      border-right: 1px solid rgba(255,255,255,0.1);
+    }
+    .stat:last-child { border-right: none; }
+    .stat-value { font-size: 1.4rem; font-weight: 800; color: var(--white); line-height: 1; }
+    .stat-label { font-size: 0.62rem; font-weight: 500; color: var(--silver); letter-spacing: 1px; text-transform: uppercase; margin-top: 4px; }
+
+    /* ── BODY ── */
+    .body { padding: 36px 44px; }
+
+    .section-title {
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 14px;
+    }
+
+    /* ── SOP GRID ── */
+    .sop-section {
+      margin-bottom: 36px;
+      padding-bottom: 36px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .sop-section:last-of-type {
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .sop-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+
+    .sop-card {
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--accent);
+      background: #FAFCFF;
+      padding: 12px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    /* Per-series left border colours */
+    .sop-card.bio  { border-left-color: var(--teal); }
+
+    .sop-card-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .sop-number {
+      font-size: 0.68rem;
+      font-weight: 700;
+      color: var(--accent);
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .sop-card.bio .sop-number { color: var(--teal); }
+
+    .sop-rev {
+      font-size: 0.6rem;
+      font-weight: 600;
+      color: var(--mid);
+      background: var(--light);
+      border: 1px solid var(--border);
+      padding: 1px 6px;
+      border-radius: 2px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .sop-title {
+      font-size: 0.83rem;
+      font-weight: 700;
+      color: var(--navy);
+      line-height: 1.3;
+    }
+
+    .sop-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      align-items: center;
+    }
+
+    .sop-meta-item {
+      font-size: 0.65rem;
+      color: var(--muted);
+    }
+
+    .sop-meta-item strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    .sop-meta-sep {
+      font-size: 0.6rem;
+      color: var(--silver);
+    }
+
+    .sop-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 3px;
+    }
+
+    .sop-tag {
+      font-size: 0.58rem;
+      font-weight: 600;
+      padding: 2px 6px;
+      border-radius: 2px;
+      background: var(--light);
+      color: var(--blue);
+      border: 1px solid var(--silver);
+      white-space: nowrap;
+    }
+
+    .sop-tag.critical { background: #FFF0F0; color: #B03030; border-color: #E8C0C0; }
+    .sop-tag.atmp     { background: #F0FFF5; color: #0E7E5E; border-color: #A8DFC8; }
+    .sop-tag.system   { background: #F5F0FF; color: #6030A0; border-color: #C8B8E8; }
+    .sop-tag.product  { background: #FFF8F0; color: var(--orange); border-color: #E8D0B0; }
+
+    .sop-scope {
+      font-size: 0.72rem;
+      color: var(--muted);
+      line-height: 1.5;
+      border-top: 1px solid var(--border);
+      padding-top: 6px;
+      margin-top: 2px;
+    }
+
+    /* ── CROSS-REF TABLE ── */
+    .xref-section {
+      margin-bottom: 36px;
+      padding-bottom: 36px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .xref-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.73rem;
+    }
+
+    .xref-table thead tr {
+      background: var(--navy);
+    }
+
+    .xref-table thead th {
+      color: var(--silver);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      font-size: 0.62rem;
+      padding: 8px 10px;
+      text-align: left;
+    }
+
+    .xref-table tbody tr {
+      border-bottom: 1px solid var(--border);
+    }
+
+    .xref-table tbody tr:last-child { border-bottom: none; }
+
+    .xref-table tbody tr:hover { background: var(--light); }
+
+    .xref-table td {
+      padding: 7px 10px;
+      vertical-align: top;
+      color: var(--text);
+    }
+
+    .xref-table td:first-child {
+      font-weight: 700;
+      color: var(--accent);
+      white-space: nowrap;
+    }
+
+    .xref-table tbody tr.bio-row td:first-child { color: var(--teal); }
+
+    /* ── LEGEND ── */
+    .legend-section { margin-bottom: 36px; }
+
+    .legend-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+
+    .legend-block {
+      padding: 12px 14px;
+      border: 1px solid var(--border);
+      background: #FAFCFF;
+    }
+
+    .legend-block-title {
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--blue);
+      margin-bottom: 8px;
+    }
+
+    .legend-block ul { list-style: none; }
+    .legend-block li {
+      font-size: 0.7rem;
+      color: var(--muted);
+      padding: 2px 0;
+      padding-left: 10px;
+      position: relative;
+    }
+    .legend-block li::before {
+      content: '—';
+      position: absolute;
+      left: 0;
+      color: var(--silver);
+      font-size: 0.62rem;
+    }
+
+    /* ── FOOTER ── */
+    .footer {
+      background: var(--navy);
+      padding: 18px 44px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .footer-left { font-size: 0.72rem; color: var(--silver); }
+    .footer-left strong { color: var(--white); }
+
+    .footer-center {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(46,127,212,0.15);
+      border: 1px solid rgba(46,127,212,0.4);
+      border-radius: 3px;
+      padding: 4px 12px;
+      font-size: 0.68rem;
+      font-weight: 600;
+      color: var(--accent);
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    .footer-right {
+      font-size: 0.65rem;
+      color: var(--mid);
+      text-align: right;
+      font-style: italic;
+    }
+
+    @media (max-width: 820px) {
+      .header { flex-direction: column; }
+      .header-logo { border-right: none; border-bottom: 4px solid var(--accent); justify-content: center; }
+      .stripe { grid-template-columns: repeat(3, 1fr); }
+      .sop-grid { grid-template-columns: 1fr; }
+      .legend-grid { grid-template-columns: repeat(2, 1fr); }
+      .body { padding: 24px 20px; }
+      .footer { flex-direction: column; align-items: flex-start; padding: 16px 20px; }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-logo">
+      <div class="logo-type">
+        <div class="logo-main">
+          <span class="logo-sc">SC</span><span class="logo-veris">veris</span>
+        </div>
+        <div class="logo-group">Group AG</div>
+      </div>
+    </div>
+    <div class="header-right">
+      <div class="header-title">Standard Operating Procedure Library</div>
+      <div class="header-sub">MasterControl Demo Instance &nbsp;·&nbsp; 16 SOPs &nbsp;·&nbsp; All Divisions &nbsp;·&nbsp; All Sites</div>
+      <div class="header-badges">
+        <span class="badge">SOP-MFG Series</span>
+        <span class="badge">SOP-BIO Series</span>
+        <span class="badge">GMP-Critical</span>
+        <span class="badge">MasterControl Mx</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- STATS STRIPE -->
+  <div class="stripe">
+    <div class="stat">
+      <div class="stat-value">16</div>
+      <div class="stat-label">Total SOPs</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value">10</div>
+      <div class="stat-label">MFG Series</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value">6</div>
+      <div class="stat-label">BIO Series</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value">9</div>
+      <div class="stat-label">Sites Covered</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value">4</div>
+      <div class="stat-label">Divisions</div>
+    </div>
+  </div>
+
+  <!-- BODY -->
+  <div class="body">
+
+    <!-- MFG SERIES -->
+    <div class="sop-section">
+      <div class="section-title">SOP-MFG Series — Core Manufacturing (10 SOPs)</div>
+      <div class="sop-grid">
+
+        <!-- MFG-001 -->
+        <div class="sop-card">
+          <div class="sop-card-top">
+            <span class="sop-number">SOP-MFG-001</span>
+            <span class="sop-rev">Rev 03</span>
+          </div>
+          <div class="sop-title">Line Clearance Prior to Batch Start</div>
+          <div class="sop-meta">
+            <span class="sop-meta-item"><strong>Owner:</strong> Han Solo</span>
+            <span class="sop-meta-sep">·</span>
+            <span class="sop-meta-item"><strong>Approved:</strong> Mace Windu</span>
+            <span class="sop-meta-sep">·</span>
+            <span class="sop-meta-item"><strong>Sites:</strong> ZRH · FRA · LYN</span>
+            <span class="sop-meta-sep">·</span>
+            <span class="sop-meta-item"><strong>Eff:</strong> 15 Mar 2026</span>
+          </div>
+          <div class="sop-tags">
+            <span class="sop-tag critical">GMP-Critical</span>
+            <span class="sop-tag">Pharma SM</span>
+            <span class="sop-tag">EBR Pre-Batch</span>
+          </div>
+          <div class="sop-scope">Physical inspection, equipment logbook verification, second-person sign-off, and photo evidence capture in MasterControl Mx before batch start.</div>
+        </div>
+
+        <!-- MFG-002 -->
+        <div class="sop-card">
+          <div class="sop-card-top">
+            <span class="sop-number">SOP-MFG-002</span>
+            <span class="sop-rev">Rev 04</span>
+          </div>
+          <div class="sop-title">In-Process Sampling and Testing</div>
+          <div class="sop-meta">
+            <span class="sop-meta-item"><strong>Owner:</strong> Padmé Amidala</span>
+            <span class="sop-meta-sep">·</span>
+            <span class="sop-meta-item"><strong>Sites:</strong> ZRH · FRA · LYN · CPH</span>
+            <span class="sop-meta-sep">·</span>
+            <span class="sop-meta-item"><strong>Eff:</strong> 01 Feb 2026</span>
+          </div>
+          <div class="sop-tags">
+            <span class="sop-tag critical">GMP-Critical</span>
+            <span class="sop-tag">Pharma SM</span>
+            <span class="sop-tag">Nutrition</span>
+            <span class="sop-tag">IPC Data Capture</span>
+          </div>
+          <div class="sop-scope">Sample collection, chain of custody, OSD/nutrition IPC testing (hardness, weight, disintegration), and OOS/OOT deviation response via Mx EBR.</div>
+        </div>
+
+        <!-- MFG-003 -->
+        <div class="sop-card">
+          <div class="sop-card-top">
+            <span class="sop-number">SOP-MFG-003</span>
+            <span class="sop-rev">Rev 05</span>
+          </div>
+          <div class="sop-title">Equipment Cleaning — General Manufacturing</div>
+          <div class="sop-meta">
+            <span class="sop-meta-item"><strong>Owner:</strong> Han Solo</span>
+            <span class="sop-meta-sep">·</span>
+            <span class="sop-meta-item"><strong>Sites:</strong> All (incl. BAS)</span>
+            <span class="sop-meta-sep">·</span>
+            <span class="sop-meta-item"><strong>Eff:</strong> 10 Jan 2026</span>
+          </div>
+          <div class="sop-tags">
+            <span class="sop-tag critical">GMP-Critical</span>
+            <span class="sop-tag">All Divisions</span>
+            <span class="sop-tag">Logbook</span>
+          </div>
+          <div class="sop-scope">Cleaning categories A/B/C, WFI rinsing, swab/rinse sampling, CLEANED status labelling, and equipment logbook entries in Mx. Covers bioreactors at BAS.</div>
+        </div>
+
+        <!-- MFG-004 -->
+        <div class="sop-card">
+          <div class="sop-card-top">
+            <span class="sop-number">SOP-MFG-004</span>
+            <span class="sop-rev">Rev 03</span>
+          </div>
+          <div class="sop-title">Weighing and Dispensing of Raw Materials</div>
+          <div class="sop-meta">
+            <span class="sop-meta-item"><strong>Owner:</strong> Han Solo</span>
+            <span class="sop-meta-sep">·</span>
+            <span class="sop-meta-item"><strong>Sites:</strong> ZRH · FRA · LYN · CPH · BAS</span>
+            <span class="sop-meta-sep">·</span>
+            <span class="sop-meta-item"><strong>Eff:</strong> 22 Apr 2026</span>
+          </div>
+          <div class="sop-tags">
+            <span class="sop-tag critical">GMP-Critical</span>
+            <span class="sop-tag">Pharma</span>
+            <span class="sop-tag">Nutrition</span>
+            <span class="sop-tag">Dual Sign-Off</span>
+          </div>
+          <div class="sop-scope">Material identity verification against EBR BOM, balance calibration check, dual sign-off in Mx, and dispensed material labelling. Includes biologics media/buffer at BAS.</div>
+        </div>
+
+        <!-- MFG-005 -->
+        <div class="sop-card">
+          <div class="sop-card-top">
+            <span class="sop-number">SOP-MFG-005</span>
+            <span class="sop-rev">Rev 03</span>
+          </div>
+          <div class="sop-title">Environmental Monitoring During Production</div>
+          <div class="sop-meta">
+            <span class="sop-meta-item"><strong>Owner:</strong> Padmé Amidala</span>
+            <span class="sop-meta-sep">·</span>
+            <span class="sop-meta-item"><strong>Approved:</strong> Obi-Wan Kenobi (QP)</span>
+            <span class="sop-meta-sep">·</span>
+            <span class="sop-meta-item"><strong>Sites:</strong> ZRH · FRA · DUB · BAS</span>
+          </div>
+          <div class="sop-tags">
+            <span class="sop-tag critical">GMP-Critical</span>
+            <span class="sop-tag">Biopharma</span>
+            <span class="sop-tag">EM Programme</span>
+          </div>
+          <div class="sop-scope">Viable and non-viable particulate monitoring for Grade A/B/C/D areas. Alert/action limit response and batch record EM data capture in Mx. Covers DUB and BAS cleanrooms.</div>
+        </div>
+
+        <!-- MFG-006 -->
+        <div class="sop-card">
+          <div class="sop-card-top">
+            <span class="sop-number">SOP-MFG-006</span>
+            <span class="sop-rev">Rev 01</span>
+          </div>
+          <div class="sop-title">Electronic Batch Record Execution in MasterControl Mx</div>
+          <div class="sop-meta">
+            <span class="sop-meta-item"><strong>Owner:</strong> Han Solo</span>
+            <span class="sop-meta-sep">·</span>
+            <span class="sop-meta-item"><strong>Approved:</strong> Padmé Amidala</span>
+            <span class="sop-meta-sep">·</span>
+            <span class="sop-meta-item"><strong>Sites:</strong> All</span>
+          </div>
+          <div class="sop-tags">
+            <span class="sop-tag critical">GMP-Critical</span>
+            <span class="sop-tag system">System SOP</span>
+            <span class="sop-tag">21 CFR Pt 11</span>
+            <span class="sop-tag">Annex 11</span>
+          </div>
+          <div class="sop-scope">EBR initiation, phase navigation, data capture, e-signatures, audit trail corrections, deviation flagging, and batch record submission. Training enforcement — Jar Jar demo SOP.</div>
+        </div>
+
+        <!-- MFG-007 -->
+        <div class="sop-card">
+          <div class="sop-card-top">
+            <span class="sop-number">SOP-MFG-007</span>
+            <span class="sop-rev">Rev 05</span>
+          </div>
+          <div class="sop-title">Gowning Procedure for Classified Manufacturing Areas</div>
+          <div class="sop-meta">
+            <span class="sop-meta-item"><strong>Owner:</strong> Bail Organa</span>
+            <span class="sop-meta-sep">·</span>
+            <span class="sop-meta-item"><strong>Sites:</strong> ZRH · FRA · DUB · BAS</span>
+            <span class="sop-meta-sep">·</span>
+            <span class="sop-meta-item"><strong>Eff:</strong> 12 May 2026</span>
+          </div>
+          <div class="sop-tags">
+            <span class="sop-tag critical">GMP-Critical</span>
+            <span class="sop-tag">Biopharma</span>
+            <span class="sop-tag">Gowning Qual</span>
+            <span class="sop-tag">EU Annex 1</span>
+          </div>
+          <div class="sop-scope">Gowning sequences for Grade D, C, and A/B areas. Annual requalification with microbiological fingertip testing. Records linked to training in MasterControl Qx.</div>
+        </div>
+
+        <!-- MFG-008 -->
+        <div class="sop-card">
+          <div class="sop-card-top">
+            <span class="sop-number">SOP-MFG-008</span>
+            <span class="sop-rev">Rev 02</span>
+          </div>
+          <div class="sop-title">Tablet Compression Operation — Coagubind® 50mg</div>
+          <div class="sop-meta">
+            <span class="sop-meta-item"><strong>Owner:</strong> Han Solo</span>
+            <span class="sop-meta-sep">·</span>
+            <span class="sop-meta-item"><strong>Approved:</strong> Obi-Wan Kenobi (QP)</span>
+            <span class="sop-meta-sep">·</span>
+            <span class="sop-meta-item"><strong>Sites:</strong> ZRH · FRA</span>
+          </div>
+          <div class="sop-tags">
+            <span class="sop-tag critical">GMP-Critical</span>
+            <span class="sop-tag product">Product-Specific</span>
+            <span class="sop-tag">Coagubind®</span>
+          </div>
+          <div class="sop-scope">Tooling setup (8mm biconvex, SC50), compression parameters (12–16 kN), IPC every 30 min (weight n=20, hardness n=10), yield reconciliation flag &gt;2% deviation.</div>
+        </div>
+
+        <!-- MFG-009 -->
+        <div class="sop-card">
+          <div class="sop-card-top">
+            <span class="sop-number">SOP-MFG-009</span>
+            <span class="sop-rev">Rev 01</span>
+          </div>
+          <div class="sop-title">CAR-T Cell Processing — SCverisCell-T™</div>
+          <div class="sop-meta">
+            <span class="sop-meta-item"><strong>Owner:</strong> Bail Organa</span>
+            <span class="sop-meta-sep">·</span>
+            <span class="sop-meta-item"><strong>Approved:</strong> Obi-Wan Kenobi (QP)</span>
+            <span class="sop-meta-sep">·</span>
+            <span class="sop-meta-item"><strong>Sites:</strong> DUB</span>
+          </div>
+          <div class="sop-tags">
+            <span class="sop-tag critical">GMP-Critical</span>
+            <span class="sop-tag atmp">ATMP</span>
+            <span class="sop-tag atmp">1-of-1</span>
+            <span class="sop-tag product">Patient-Specific</span>
+          </div>
+          <div class="sop-scope">Full autologous CAR-T manufacture: 5-point chain of identity checks in Mx from leukapheresis receipt through cryopreservation. QP certification requires all 5 CoI checks confirmed.</div>
+        </div>
+
+        <!-- MFG-010 -->
+        <div class="sop-card">
+          <div class="sop-card-top">
+            <span class="sop-number">SOP-MFG-010</span>
+            <span class="sop-rev">Rev 02</span>
+          </div>
+          <div class="sop-title">Equipment Logbook Management in MasterControl Mx</div>
+          <div class="sop-meta">
+            <span class="sop-meta-item"><strong>Owner:</strong> Padmé Amidala</span>
+            <span class="sop-meta-sep">·</span>
+            <span class="sop-meta-item"><strong>Approved:</strong> Mon Mothma (CEO)</span>
+            <span class="sop-meta-sep">·</span>
+            <span class="sop-meta-item"><strong>Sites:</strong> All</span>
+          </div>
+          <div class="sop-tags">
+            <span class="sop-tag critical">GMP-Critical</span>
+            <span class="sop-tag system">System SOP</span>
+            <span class="sop-tag">All Divisions</span>
+            <span class="sop-tag">CIP/SIP</span>
+          </div>
+          <div class="sop-scope">Equipment registration, Use/Cleaning/Maintenance/Calibration/Incident entry types, auto-linked Use entries on batch start, pre-batch status check. Cryo excursion alerting at DUB.</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- BIO SERIES -->
+    <div class="sop-section">
+      <div class="section-title">SOP-BIO Series — SCveris Biopharma (6 SOPs) — BAS · DUB</div>
+      <div class="sop-grid">
+
+        <!-- BIO-001 -->
+        <div class="sop-card bio">
+          <div class="sop-card-top">
+            <span class="sop-number">SOP-BIO-001</span>
+            <span class="sop-rev">Rev 01</span>
+          </div>
+          <div class="sop-title">Biologics Suite Clearance and Changeover</div>
+          <div class="sop-meta">
+            <span class="sop-meta-item"><strong>Owner:</strong> Ahsoka Tano</span>
+            <span class="sop-meta-sep">·</span>
+            <span class="sop-meta-item"><strong>Sites:</strong> BAS · DUB</span>
+            <span class="sop-meta-sep">·</span>
+            <span class="sop-meta-item"><strong>Eff:</strong> 01 Sep 2026</span>
+          </div>
+          <div class="sop-tags">
+            <span class="sop-tag critical">GMP-Critical</span>
+            <span class="sop-tag">CIP/SIP</span>
+            <span class="sop-tag">VHP</span>
+            <span class="sop-tag">Biologics</span>
+          </div>
+          <div class="sop-scope">Pre-changeover inspection, CIP/SIP execution and parameter recording in Mx, VHP decontamination with biological indicator, post-changeover surface/air sampling. References SOP-MFG-003.</div>
+        </div>
+
+        <!-- BIO-002 -->
+        <div class="sop-card bio">
+          <div class="sop-card-top">
+            <span class="sop-number">SOP-BIO-002</span>
+            <span class="sop-rev">Rev 01</span>
+          </div>
+          <div class="sop-title">Biologics In-Process Sampling — Cell Count, Viability, and CPPs</div>
+          <div class="sop-meta">
+            <span class="sop-meta-item"><strong>Owner:</strong> Ahsoka Tano</span>
+            <span class="sop-meta-sep">·</span>
+            <span class="sop-meta-item"><strong>Approved:</strong> Obi-Wan Kenobi (QP)</span>
+            <span class="sop-meta-sep">·</span>
+            <span class="sop-meta-item"><strong>Sites:</strong> BAS · DUB</span>
+          </div>
+          <div class="sop-tags">
+            <span class="sop-tag critical">GMP-Critical</span>
+            <span class="sop-tag">CPPs</span>
+            <span class="sop-tag">Cell Count</span>
+            <span class="sop-tag">Bioreactor</span>
+          </div>
+          <div class="sop-scope">IPC sampling from bioreactors (BAS — SCverisMab-1™, SCverisFactor-8™, SCverisVax-R™) and cell expansion (DUB — SCverisCell-T™, SCverisGene-V™). pH, DO, glucose, lactate, titre.</div>
+        </div>
+
+        <!-- BIO-003 -->
+        <div class="sop-card bio">
+          <div class="sop-card-top">
+            <span class="sop-number">SOP-BIO-003</span>
+            <span class="sop-rev">Rev 01</span>
+          </div>
+          <div class="sop-title">AAV Vector Production and Lot Genealogy — SCverisGene-V™</div>
+          <div class="sop-meta">
+            <span class="sop-meta-item"><strong>Owner:</strong> Cassian Andor</span>
+            <span class="sop-meta-sep">·</span>
+            <span class="sop-meta-item"><strong>Approved:</strong> Obi-Wan Kenobi (QP)</span>
+            <span class="sop-meta-sep">·</span>
+            <span class="sop-meta-item"><strong>Sites:</strong> DUB</span>
+          </div>
+          <div class="sop-tags">
+            <span class="sop-tag critical">GMP-Critical</span>
+            <span class="sop-tag atmp">ATMP</span>
+            <span class="sop-tag">Lot Genealogy</span>
+            <span class="sop-tag">AAV9</span>
+          </div>
+          <div class="sop-scope">HEK293 transfection, benzonase harvest, affinity/IEX purification, UF/DF, sterile fill. 7-node lot genealogy chain auto-linked in Mx from plasmid DNA to final vials.</div>
+        </div>
+
+        <!-- BIO-004 -->
+        <div class="sop-card bio">
+          <div class="sop-card-top">
+            <span class="sop-number">SOP-BIO-004</span>
+            <span class="sop-rev">Rev 01</span>
+          </div>
+          <div class="sop-title">Cryopreservation and Cold Chain Management</div>
+          <div class="sop-meta">
+            <span class="sop-meta-item"><strong>Owner:</strong> Luke Skywalker</span>
+            <span class="sop-meta-sep">·</span>
+            <span class="sop-meta-item"><strong>Approved:</strong> Padmé Amidala</span>
+            <span class="sop-meta-sep">·</span>
+            <span class="sop-meta-item"><strong>Sites:</strong> BAS · DUB</span>
+          </div>
+          <div class="sop-tags">
+            <span class="sop-tag critical">GMP-Critical</span>
+            <span class="sop-tag">CRF</span>
+            <span class="sop-tag">Cold Chain</span>
+            <span class="sop-tag">Cryo Excursion</span>
+          </div>
+          <div class="sop-scope">Controlled-rate freezing, LN₂/−80°C cryostorage, BMS-linked continuous temperature monitoring with Mx auto-alerting on excursion. Covers Cell-T, Gene-V, Vax-R, and Derm-T.</div>
+        </div>
+
+        <!-- BIO-005 -->
+        <div class="sop-card bio">
+          <div class="sop-card-top">
+            <span class="sop-number">SOP-BIO-005</span>
+            <span class="sop-rev">Rev 01</span>
+          </div>
+          <div class="sop-title">Donor Traceability — Plasma and Tissue Products</div>
+          <div class="sop-meta">
+            <span class="sop-meta-item"><strong>Owner:</strong> Ahsoka Tano</span>
+            <span class="sop-meta-sep">·</span>
+            <span class="sop-meta-item"><strong>Approved:</strong> Obi-Wan Kenobi (QP)</span>
+            <span class="sop-meta-sep">·</span>
+            <span class="sop-meta-item"><strong>Sites:</strong> BAS · DUB</span>
+          </div>
+          <div class="sop-tags">
+            <span class="sop-tag critical">GMP-Critical</span>
+            <span class="sop-tag">Regulatory</span>
+            <span class="sop-tag">EUTCD</span>
+            <span class="sop-tag">Plasma Pooling</span>
+          </div>
+          <div class="sop-scope">Donor ID linkage, quarantine, plasma pooling records (SCverisPlasma-G™), tissue chain of custody (SCverisDerm-T™). Full traceability report from Mx. EU Blood &amp; Tissue Directives.</div>
+        </div>
+
+        <!-- BIO-006 -->
+        <div class="sop-card bio">
+          <div class="sop-card-top">
+            <span class="sop-number">SOP-BIO-006</span>
+            <span class="sop-rev">Rev 01</span>
+          </div>
+          <div class="sop-title">Viral Safety and Viral Clearance Steps</div>
+          <div class="sop-meta">
+            <span class="sop-meta-item"><strong>Owner:</strong> Ahsoka Tano</span>
+            <span class="sop-meta-sep">·</span>
+            <span class="sop-meta-item"><strong>Approved:</strong> Obi-Wan Kenobi (QP)</span>
+            <span class="sop-meta-sep">·</span>
+            <span class="sop-meta-item"><strong>Sites:</strong> BAS</span>
+          </div>
+          <div class="sop-tags">
+            <span class="sop-tag critical">GMP-Critical</span>
+            <span class="sop-tag">Product Safety</span>
+            <span class="sop-tag">ICH Q5A</span>
+            <span class="sop-tag">Nanofiltration</span>
+          </div>
+          <div class="sop-scope">Low pH inactivation (pH 3.5–3.8, SCverisMab-1™ &amp; SCverisFactor-8™), S/D treatment (SCverisPlasma-G™), nanofiltration. Critical steps enforced in EBR — cannot be skipped.</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- LEGEND / KEY INFO -->
+    <div class="legend-section">
+      <div class="section-title">Key Demo Links — MasterControl Mx</div>
+      <div class="legend-grid">
+
+        <div class="legend-block">
+          <div class="legend-block-title">Training Compliance Demo</div>
+          <ul>
+            <li>SOP-MFG-006 — EBR Execution</li>
+            <li>SOP-MFG-010 — Equipment Logbooks</li>
+            <li>Jar Jar Binks — expired training</li>
+            <li>System blocks e-signature</li>
+          </ul>
+        </div>
+
+        <div class="legend-block">
+          <div class="legend-block-title">Showstopper SOPs</div>
+          <ul>
+            <li>SOP-MFG-009 — 1-of-1 CAR-T</li>
+            <li>SOP-BIO-003 — AAV Lot Genealogy</li>
+            <li>SOP-BIO-004 — Cold Chain Excursion</li>
+            <li>SOP-BIO-006 — Viral Safety Steps</li>
+          </ul>
+        </div>
+
+        <div class="legend-block">
+          <div class="legend-block-title">System SOPs (All Sites)</div>
+          <ul>
+            <li>SOP-MFG-006 — All EBR users</li>
+            <li>SOP-MFG-010 — All equipment</li>
+            <li>Linked to all production records</li>
+            <li>Applies to every division</li>
+          </ul>
+        </div>
+
+        <div class="legend-block">
+          <div class="legend-block-title">Biopharma-Only SOPs</div>
+          <ul>
+            <li>SOP-BIO-001 to BIO-006</li>
+            <li>Sites: BAS and/or DUB only</li>
+            <li>Personas: Ahsoka, Cassian, Luke</li>
+            <li>QP: Obi-Wan Kenobi (all BIO)</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+
+  </div><!-- /body -->
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div class="footer-left">
+      <strong>SCveris Group AG</strong> &nbsp;·&nbsp;
+      SOP Library — MasterControl Demo Instance &nbsp;·&nbsp;
+      <span style="color:var(--mid)">16 Controlled Documents &nbsp;·&nbsp; September 2026</span>
+    </div>
+    <div class="footer-center">Powered by MasterControl</div>
+    <div class="footer-right">
+      For demonstration purposes only.<br/>
+      <span style="font-size:0.6rem;">All SOPs are fictional and created for the SCveris Group demo instance.</span>
+    </div>
+  </div>
+
+</div><!-- /page -->
+</body>
+</html>
+
+

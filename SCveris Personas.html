@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SCveris Group — Personas</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:   #0B1F3A;
+      --blue:   #1A4B8C;
+      --accent: #2E7FD4;
+      --light:  #E8F0FA;
+      --silver: #C8D5E8;
+      --mid:    #6B82A0;
+      --white:  #FFFFFF;
+      --text:   #1C2B3A;
+      --muted:  #4A6080;
+      --border: #D0DCEC;
+      --teal:   #0E7E82;
+      --green:  #167A5E;
+      --red:    #B03030;
+      --red-light: #FFF0F0;
+      --red-border: #E8C0C0;
+      --gold:   #8A6010;
+      --gold-light: #FFF8EC;
+      --gold-border: #E0D0A0;
+    }
+
+    html { font-size: 13px; }
+
+    body {
+      font-family: 'Inter', 'Helvetica Neue', sans-serif;
+      background: #F0F4FA;
+      color: var(--text);
+      line-height: 1.55;
+      padding: 32px 20px;
+    }
+
+    .page {
+      max-width: 1080px;
+      margin: 0 auto;
+      background: var(--white);
+      box-shadow: 0 4px 32px rgba(11,31,58,0.13);
+    }
+
+    /* ══════════════════════════════════════
+       HEADER
+    ══════════════════════════════════════ */
+    .header { display: flex; align-items: stretch; }
+
+    .header-logo {
+      background: var(--white);
+      padding: 14px 28px;
+      display: flex;
+      align-items: center;
+      flex-shrink: 0;
+      border-right: 4px solid var(--accent);
+    }
+
+    .logo-type { display: flex; flex-direction: column; line-height: 1; gap: 2px; }
+    .logo-main { display: flex; align-items: baseline; }
+    .logo-sc    { font-size: 3.2rem; font-weight: 800; color: var(--navy); letter-spacing: -2px; line-height: 1; }
+    .logo-veris { font-size: 1.6rem; font-weight: 300; color: var(--accent); letter-spacing: 1px; line-height: 1; padding-bottom: 4px; }
+    .logo-group { font-size: 0.6rem; font-weight: 600; letter-spacing: 4px; text-transform: uppercase; color: var(--mid); padding-left: 2px; }
+
+    .header-right {
+      background: var(--navy);
+      flex: 1;
+      padding: 20px 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .header-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--white);
+      letter-spacing: 0.3px;
+    }
+
+    .header-sub {
+      font-size: 0.82rem;
+      font-weight: 400;
+      color: var(--silver);
+    }
+
+    .header-badges {
+      display: flex;
+      gap: 8px;
+      margin-top: 4px;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      display: inline-block;
+      background: rgba(46,127,212,0.18);
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+      padding: 3px 10px;
+      border-radius: 3px;
+      text-transform: uppercase;
+    }
+
+    /* ══════════════════════════════════════
+       STATS STRIPE
+    ══════════════════════════════════════ */
+    .stripe {
+      background: var(--blue);
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+    }
+
+    .stat {
+      padding: 14px 20px;
+      text-align: center;
+      border-right: 1px solid rgba(255,255,255,0.1);
+    }
+    .stat:last-child { border-right: none; }
+    .stat-value { font-size: 1.4rem; font-weight: 800; color: var(--white); line-height: 1; }
+    .stat-label { font-size: 0.62rem; font-weight: 500; color: var(--silver); letter-spacing: 1px; text-transform: uppercase; margin-top: 4px; }
+
+    /* ══════════════════════════════════════
+       BODY
+    ══════════════════════════════════════ */
+    .body { padding: 36px 44px; }
+
+    .section-title {
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 14px;
+    }
+
+    .persona-section {
+      margin-bottom: 36px;
+      padding-bottom: 36px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .persona-section:last-of-type {
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    /* ══════════════════════════════════════
+       PERSONA GRID + CARDS
+    ══════════════════════════════════════ */
+    .persona-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+
+    .persona-grid.two-col {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .pcard {
+      border: 1px solid var(--border);
+      border-top: 3px solid var(--accent);
+      background: #FAFCFF;
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    /* Top border colour per group */
+    .pcard.leadership { border-top-color: var(--accent); }
+    .pcard.ops        { border-top-color: var(--green); }
+    .pcard.bio        { border-top-color: var(--teal); }
+    .pcard.reg        { border-top-color: #7A3D8A; }
+
+    /* Card header row */
+    .pcard-top {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .pcard-avatar {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.15rem;
+      flex-shrink: 0;
+      border: 1px solid var(--border);
+    }
+
+    .pcard.leadership .pcard-avatar { background: #EAF2FC; }
+    .pcard.ops        .pcard-avatar { background: #EAF7F0; }
+    .pcard.bio        .pcard-avatar { background: #EAF7F7; }
+    .pcard.reg        .pcard-avatar { background: #F5F0FB; }
+
+    .pcard-name {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: var(--navy);
+      line-height: 1.2;
+    }
+
+    .pcard-username {
+      font-size: 0.65rem;
+      font-weight: 500;
+      color: var(--mid);
+      font-family: 'Courier New', monospace;
+      background: var(--light);
+      border: 1px solid var(--border);
+      padding: 1px 6px;
+      border-radius: 2px;
+      display: inline-block;
+      margin-top: 2px;
+    }
+
+    .pcard-role {
+      font-size: 0.72rem;
+      font-weight: 600;
+      margin-top: 2px;
+    }
+
+    .pcard.leadership .pcard-role { color: var(--accent); }
+    .pcard.ops        .pcard-role { color: var(--green); }
+    .pcard.bio        .pcard-role { color: var(--teal); }
+    .pcard.reg        .pcard-role { color: #7A3D8A; }
+
+    /* Tags */
+    .pcard-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 3px;
+    }
+
+    .ptag {
+      font-size: 0.58rem;
+      font-weight: 600;
+      padding: 2px 6px;
+      border-radius: 2px;
+      white-space: nowrap;
+    }
+
+    .ptag.site {
+      background: var(--light);
+      color: var(--blue);
+      border: 1px solid var(--silver);
+    }
+
+    .ptag.div {
+      background: var(--light);
+      color: var(--muted);
+      border: 1px solid var(--border);
+    }
+
+    .ptag.bio-div {
+      background: #EAF7F7;
+      color: var(--teal);
+      border: 1px solid #A8D8D8;
+    }
+
+    .ptag.spec {
+      background: var(--light);
+      color: var(--muted);
+      border: 1px solid var(--border);
+    }
+
+    /* Why they fit */
+    .pcard-why {
+      font-size: 0.72rem;
+      color: var(--muted);
+      line-height: 1.55;
+      border-top: 1px solid var(--border);
+      padding-top: 7px;
+    }
+
+    /* Demo Moment */
+    .pcard-moment {
+      font-size: 0.71rem;
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--accent);
+      padding: 6px 8px;
+      color: var(--text);
+      line-height: 1.5;
+    }
+
+    .pcard.ops .pcard-moment  { border-left-color: var(--green); }
+    .pcard.bio .pcard-moment  { border-left-color: var(--teal); }
+    .pcard.reg .pcard-moment  { border-left-color: #7A3D8A; }
+
+    .moment-label {
+      font-size: 0.58rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--mid);
+      margin-bottom: 3px;
+    }
+
+    /* ══════════════════════════════════════
+       JAR JAR — SPECIAL BLOCK
+    ══════════════════════════════════════ */
+    .jarjar-block {
+      border: 1px solid var(--red-border);
+      border-top: 3px solid var(--red);
+      background: var(--red-light);
+      padding: 20px 24px;
+    }
+
+    .jarjar-inner {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 16px;
+      align-items: start;
+    }
+
+    .jarjar-avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: #F8DADA;
+      border: 1px solid var(--red-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      flex-shrink: 0;
+    }
+
+    .jarjar-name {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--navy);
+    }
+
+    .jarjar-username {
+      font-size: 0.65rem;
+      font-family: 'Courier New', monospace;
+      color: var(--mid);
+      background: var(--white);
+      border: 1px solid var(--red-border);
+      padding: 1px 6px;
+      border-radius: 2px;
+      display: inline-block;
+      margin-top: 2px;
+    }
+
+    .jarjar-role {
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--red);
+      margin-top: 3px;
+    }
+
+    .jarjar-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 3px;
+      margin-top: 5px;
+    }
+
+    .jarjar-tag {
+      font-size: 0.58rem;
+      font-weight: 600;
+      padding: 2px 6px;
+      border-radius: 2px;
+      white-space: nowrap;
+    }
+
+    .jarjar-tag.site  { background: var(--light); color: var(--blue); border: 1px solid var(--silver); }
+    .jarjar-tag.alert { background: #F8DADA; color: var(--red); border: 1px solid var(--red-border); }
+
+    .jarjar-script {
+      margin-top: 14px;
+      background: var(--white);
+      border: 1px dashed var(--red-border);
+      padding: 14px 18px;
+      font-size: 0.74rem;
+      line-height: 1.7;
+      color: var(--text);
+    }
+
+    .jarjar-quote {
+      font-style: italic;
+      color: var(--gold);
+      display: block;
+      font-size: 0.88rem;
+      font-weight: 500;
+      margin-bottom: 10px;
+    }
+
+    .jarjar-script strong { color: var(--red); }
+
+    .jarjar-script code {
+      font-family: 'Courier New', monospace;
+      font-size: 0.78rem;
+      background: var(--light);
+      border: 1px solid var(--border);
+      padding: 1px 5px;
+      border-radius: 2px;
+    }
+
+    .jarjar-punchline {
+      margin-top: 10px;
+      font-size: 0.76rem;
+      font-weight: 700;
+      color: var(--navy);
+      border-top: 1px solid var(--red-border);
+      padding-top: 8px;
+    }
+
+    /* ══════════════════════════════════════
+       FOOTER
+    ══════════════════════════════════════ */
+    .footer {
+      background: var(--navy);
+      padding: 18px 44px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .footer-left { font-size: 0.72rem; color: var(--silver); }
+    .footer-left strong { color: var(--white); }
+
+    .footer-center {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(46,127,212,0.15);
+      border: 1px solid rgba(46,127,212,0.4);
+      border-radius: 3px;
+      padding: 4px 12px;
+      font-size: 0.68rem;
+      font-weight: 600;
+      color: var(--accent);
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    .footer-right {
+      font-size: 0.65rem;
+      color: var(--mid);
+      text-align: right;
+      font-style: italic;
+    }
+
+    /* ══════════════════════════════════════
+       RESPONSIVE
+    ══════════════════════════════════════ */
+    @media (max-width: 860px) {
+      .header { flex-direction: column; }
+      .header-logo { border-right: none; border-bottom: 4px solid var(--accent); justify-content: center; }
+      .stripe { grid-template-columns: repeat(3, 1fr); }
+      .persona-grid, .persona-grid.two-col { grid-template-columns: 1fr 1fr; }
+      .body { padding: 24px 20px; }
+      .footer { flex-direction: column; align-items: flex-start; padding: 16px 20px; }
+    }
+
+    @media (max-width: 560px) {
+      .persona-grid, .persona-grid.two-col { grid-template-columns: 1fr; }
+      .stripe { grid-template-columns: repeat(2, 1fr); }
+      .jarjar-inner { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ══════════════════════════════════════
+       HEADER
+  ══════════════════════════════════════ -->
+  <div class="header">
+    <div class="header-logo">
+      <div class="logo-type">
+        <div class="logo-main">
+          <span class="logo-sc">SC</span><span class="logo-veris">veris</span>
+        </div>
+        <div class="logo-group">Group AG</div>
+      </div>
+    </div>
+    <div class="header-right">
+      <div class="header-title">Demo Instance — Personas</div>
+      <div class="header-sub">MasterControl Mx · Qx · Ax &nbsp;·&nbsp; 15 Users &nbsp;·&nbsp; All Divisions &nbsp;·&nbsp; All Sites &nbsp;·&nbsp; Star Wars Cast</div>
+      <div class="header-badges">
+        <span class="badge">Leadership &amp; Quality</span>
+        <span class="badge">Small Molecule</span>
+        <span class="badge">Biopharma</span>
+        <span class="badge">Regulatory &amp; Support</span>
+        <span class="badge">Training Demo</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       STATS STRIPE
+  ══════════════════════════════════════ -->
+  <div class="stripe">
+    <div class="stat">
+      <div class="stat-value">15</div>
+      <div class="stat-label">Total Personas</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value">5</div>
+      <div class="stat-label">Leadership &amp; QA</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value">6</div>
+      <div class="stat-label">Manufacturing</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value">3</div>
+      <div class="stat-label">Regulatory &amp; Support</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value">9</div>
+      <div class="stat-label">Sites Covered</div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       BODY
+  ══════════════════════════════════════ -->
+  <div class="body">
+
+    <!-- ── LEADERSHIP & QUALITY ── -->
+    <div class="persona-section">
+      <div class="section-title">Leadership &amp; Quality — 5 Personas</div>
+      <div class="persona-grid">
+
+        <!-- Mon Mothma -->
+        <div class="pcard leadership">
+          <div class="pcard-top">
+            <div class="pcard-avatar">👑</div>
+            <div>
+              <div class="pcard-name">Mon Mothma</div>
+              <div class="pcard-username">m.mothma</div>
+              <div class="pcard-role">CEO — SCveris Group</div>
+            </div>
+          </div>
+          <div class="pcard-tags">
+            <span class="ptag site">ZRH</span>
+            <span class="ptag div">Group</span>
+            <span class="ptag spec">Executive</span>
+          </div>
+          <div class="pcard-why">Calm, strategic, sees the big picture — never the shop floor. Cares about outcomes, not SOPs.</div>
+          <div class="pcard-moment">
+            <div class="moment-label">Demo Moment</div>
+            BI dashboard — KPIs, OEE, batch cycle time, cross-site performance at a glance.
+          </div>
+        </div>
+
+        <!-- Padmé Amidala -->
+        <div class="pcard leadership">
+          <div class="pcard-top">
+            <div class="pcard-avatar">📋</div>
+            <div>
+              <div class="pcard-name">Padmé Amidala</div>
+              <div class="pcard-username">p.amidala</div>
+              <div class="pcard-role">VP Quality — SCveris Group</div>
+            </div>
+          </div>
+          <div class="pcard-tags">
+            <span class="ptag site">ZRH</span>
+            <span class="ptag div">Group</span>
+            <span class="ptag spec">Quality</span>
+          </div>
+          <div class="pcard-why">Principled, detail-obsessed, cross-functional authority without ego. Holds quality above all.</div>
+          <div class="pcard-moment">
+            <div class="moment-label">Demo Moment</div>
+            Cross-site quality metrics, deviation trends, CAPA performance across all divisions.
+          </div>
+        </div>
+
+        <!-- Bail Organa -->
+        <div class="pcard leadership">
+          <div class="pcard-top">
+            <div class="pcard-avatar">🏛️</div>
+            <div>
+              <div class="pcard-name">Bail Organa</div>
+              <div class="pcard-username">b.organa</div>
+              <div class="pcard-role">Site Director — Biopharma (DUB)</div>
+            </div>
+          </div>
+          <div class="pcard-tags">
+            <span class="ptag site">DUB</span>
+            <span class="ptag bio-div">SCveris Biopharma</span>
+            <span class="ptag spec">Operations</span>
+          </div>
+          <div class="pcard-why">Trusted, steady, gets things done without drama. Oversees CGT, gene therapy, and tissue operations at Dublin.</div>
+          <div class="pcard-moment">
+            <div class="moment-label">Demo Moment</div>
+            Site-level batch visibility, cross-BU disposition approval from Dublin HQ.
+          </div>
+        </div>
+
+        <!-- Mace Windu -->
+        <div class="pcard leadership">
+          <div class="pcard-top">
+            <div class="pcard-avatar">⚖️</div>
+            <div>
+              <div class="pcard-name">Mace Windu</div>
+              <div class="pcard-username">m.windu</div>
+              <div class="pcard-role">QA Manager — Pharma (ZRH)</div>
+            </div>
+          </div>
+          <div class="pcard-tags">
+            <span class="ptag site">ZRH</span>
+            <span class="ptag div">SCveris Pharma</span>
+            <span class="ptag spec">QA</span>
+          </div>
+          <div class="pcard-why">No nonsense. Rules are rules. He holds the batch — full stop. Nothing ships without his review.</div>
+          <div class="pcard-moment">
+            <div class="moment-label">Demo Moment</div>
+            Batch review queue, deviation ownership, CAPA sign-off. The gatekeeper.
+          </div>
+        </div>
+
+        <!-- Obi-Wan Kenobi -->
+        <div class="pcard leadership">
+          <div class="pcard-top">
+            <div class="pcard-avatar">🧭</div>
+            <div>
+              <div class="pcard-name">Obi-Wan Kenobi</div>
+              <div class="pcard-username">o.kenobi</div>
+              <div class="pcard-role">QP (Qualified Person) — AMS</div>
+            </div>
+          </div>
+          <div class="pcard-tags">
+            <span class="ptag site">AMS</span>
+            <span class="ptag div">SCveris Pharma</span>
+            <span class="ptag spec">QP / Regulatory</span>
+          </div>
+          <div class="pcard-why">The wise certifier. Signs nothing without understanding everything. Personally liable — always thorough.</div>
+          <div class="pcard-moment">
+            <div class="moment-label">Demo Moment</div>
+            Final batch certification — the QP release story. Risk-based disposition in action.
+          </div>
+        </div>
+
+      </div><!-- /persona-grid -->
+    </div><!-- /persona-section -->
+
+
+    <!-- ── MANUFACTURING — SMALL MOLECULE ── -->
+    <div class="persona-section">
+      <div class="section-title">Manufacturing &amp; Operations — Small Molecule</div>
+      <div class="persona-grid">
+
+        <!-- Han Solo -->
+        <div class="pcard ops">
+          <div class="pcard-top">
+            <div class="pcard-avatar">🚀</div>
+            <div>
+              <div class="pcard-name">Han Solo</div>
+              <div class="pcard-username">h.solo</div>
+              <div class="pcard-role">Manufacturing Manager — Pharma / Nutrition</div>
+            </div>
+          </div>
+          <div class="pcard-tags">
+            <span class="ptag site">LYN</span>
+            <span class="ptag div">Pharma · Nutrition</span>
+            <span class="ptag spec">Operations</span>
+          </div>
+          <div class="pcard-why">Gets the batch out. Pragmatic. Slightly impatient with paperwork. Trusts the process when it works.</div>
+          <div class="pcard-moment">
+            <div class="moment-label">Demo Moment</div>
+            Line scheduling, work order management, cycle time — speed where it matters.
+          </div>
+        </div>
+
+        <!-- Rey -->
+        <div class="pcard ops">
+          <div class="pcard-top">
+            <div class="pcard-avatar">⚡</div>
+            <div>
+              <div class="pcard-name">Rey</div>
+              <div class="pcard-username">rey.jakku</div>
+              <div class="pcard-role">Production Operator — Pharma (FRA)</div>
+            </div>
+          </div>
+          <div class="pcard-tags">
+            <span class="ptag site">FRA</span>
+            <span class="ptag div">SCveris Pharma</span>
+            <span class="ptag spec">Operator</span>
+          </div>
+          <div class="pcard-why">Capable, diligent, follows the process, earns trust quickly. Fully trained — the contrast to Jar Jar.</div>
+          <div class="pcard-moment">
+            <div class="moment-label">Demo Moment</div>
+            EBR execution, step sign-off, data capture on tablet. The paperless story in motion.
+          </div>
+        </div>
+
+        <!-- Chewbacca -->
+        <div class="pcard ops">
+          <div class="pcard-top">
+            <div class="pcard-avatar">🔧</div>
+            <div>
+              <div class="pcard-name">Chewbacca</div>
+              <div class="pcard-username">chewbacca</div>
+              <div class="pcard-role">Maintenance Technician — Nutrition (CPH)</div>
+            </div>
+          </div>
+          <div class="pcard-tags">
+            <span class="ptag site">CPH</span>
+            <span class="ptag div">SCveris Nutrition</span>
+            <span class="ptag spec">Maintenance</span>
+          </div>
+          <div class="pcard-why">Keeps everything running. Nobody questions his logbooks. Never misses a PM. The quiet backbone of CPH.</div>
+          <div class="pcard-moment">
+            <div class="moment-label">Demo Moment</div>
+            Equipment logbooks, maintenance history, CMMS event triggered from logbook entry.
+          </div>
+        </div>
+
+      </div><!-- /persona-grid -->
+    </div><!-- /persona-section -->
+
+
+    <!-- ── MANUFACTURING — BIOPHARMA ── -->
+    <div class="persona-section">
+      <div class="section-title">Manufacturing &amp; Operations — Biopharma (BAS · DUB)</div>
+      <div class="persona-grid">
+
+        <!-- Ahsoka Tano -->
+        <div class="pcard bio">
+          <div class="pcard-top">
+            <div class="pcard-avatar">🧫</div>
+            <div>
+              <div class="pcard-name">Ahsoka Tano</div>
+              <div class="pcard-username">a.tano</div>
+              <div class="pcard-role">Bioprocess Specialist — Biopharma (BAS)</div>
+            </div>
+          </div>
+          <div class="pcard-tags">
+            <span class="ptag site">BAS</span>
+            <span class="ptag bio-div">SCveris Biopharma</span>
+            <span class="ptag spec">Biologics</span>
+          </div>
+          <div class="pcard-why">Independent, bridges old and new methods, highly skilled across platforms. The workhorse of BAS.</div>
+          <div class="pcard-moment">
+            <div class="moment-label">Demo Moment</div>
+            SCverisMab-1™ bioreactor EBR — upstream/downstream handoff, vaccine &amp; plasma manufacturing at scale.
+          </div>
+        </div>
+
+        <!-- Luke Skywalker -->
+        <div class="pcard bio">
+          <div class="pcard-top">
+            <div class="pcard-avatar">🧬</div>
+            <div>
+              <div class="pcard-name">Luke Skywalker</div>
+              <div class="pcard-username">l.skywalker</div>
+              <div class="pcard-role">CGT Specialist / Operator — Biopharma (DUB)</div>
+            </div>
+          </div>
+          <div class="pcard-tags">
+            <span class="ptag site">DUB</span>
+            <span class="ptag bio-div">SCveris Biopharma</span>
+            <span class="ptag spec">Cell Therapy</span>
+          </div>
+          <div class="pcard-why">The specialist nobody else fully understands. Does the extraordinary. Every batch is one patient, one life.</div>
+          <div class="pcard-moment">
+            <div class="moment-label">Demo Moment</div>
+            SCverisCell-T™ — 1-of-1 patient batch, 5 chain-of-identity checkpoints. Tissue chain of custody.
+          </div>
+        </div>
+
+        <!-- Cassian Andor -->
+        <div class="pcard bio">
+          <div class="pcard-top">
+            <div class="pcard-avatar">🦠</div>
+            <div>
+              <div class="pcard-name">Cassian Andor</div>
+              <div class="pcard-username">c.andor</div>
+              <div class="pcard-role">Viral Vector Specialist — Biopharma (DUB)</div>
+            </div>
+          </div>
+          <div class="pcard-tags">
+            <span class="ptag site">DUB</span>
+            <span class="ptag bio-div">SCveris Biopharma</span>
+            <span class="ptag spec">Gene Therapy</span>
+          </div>
+          <div class="pcard-why">Resourceful, meticulous, works in the most complex environment. Does what needs to be done, no drama.</div>
+          <div class="pcard-moment">
+            <div class="moment-label">Demo Moment</div>
+            SCverisGene-V™ — AAV vector production, lot genealogy, viral safety steps, potency release.
+          </div>
+        </div>
+
+      </div><!-- /persona-grid -->
+    </div><!-- /persona-section -->
+
+
+    <!-- ── REGULATORY & SUPPORT ── -->
+    <div class="persona-section">
+      <div class="section-title">Regulatory &amp; Support</div>
+      <div class="persona-grid">
+
+        <!-- Leia Organa -->
+        <div class="pcard reg">
+          <div class="pcard-top">
+            <div class="pcard-avatar">📁</div>
+            <div>
+              <div class="pcard-name">Leia Organa</div>
+              <div class="pcard-username">l.organa</div>
+              <div class="pcard-role">Regulatory Affairs — MedTech (MIL)</div>
+            </div>
+          </div>
+          <div class="pcard-tags">
+            <span class="ptag site">MIL</span>
+            <span class="ptag div">SCveris MedTech</span>
+            <span class="ptag spec">Regulatory</span>
+          </div>
+          <div class="pcard-why">Knows every rule, every agency, every submission deadline. Unflappable under pressure. The regulatory backbone.</div>
+          <div class="pcard-moment">
+            <div class="moment-label">Demo Moment</div>
+            DHR export for EU MDR technical file. Regulatory readiness — complete and retrievable.
+          </div>
+        </div>
+
+        <!-- R2-D2 -->
+        <div class="pcard reg">
+          <div class="pcard-top">
+            <div class="pcard-avatar">🤖</div>
+            <div>
+              <div class="pcard-name">R2-D2</div>
+              <div class="pcard-username">svc.r2d2</div>
+              <div class="pcard-role">API Integration User — IT</div>
+            </div>
+          </div>
+          <div class="pcard-tags">
+            <span class="ptag site">—</span>
+            <span class="ptag div">Group IT</span>
+            <span class="ptag spec">Service Account</span>
+          </div>
+          <div class="pcard-why">Headless. Silent. Does exactly what it's told. Never complains. The perfect API actor.</div>
+          <div class="pcard-moment">
+            <div class="moment-label">Demo Moment</div>
+            Batch record created programmatically via Mx REST API. System-to-system integration in real time.
+          </div>
+        </div>
+
+        <!-- C-3PO -->
+        <div class="pcard reg">
+          <div class="pcard-top">
+            <div class="pcard-avatar">🔭</div>
+            <div>
+              <div class="pcard-name">C-3PO</div>
+              <div class="pcard-username">audit.c3po</div>
+              <div class="pcard-role">External Auditor</div>
+            </div>
+          </div>
+          <div class="pcard-tags">
+            <span class="ptag site">—</span>
+            <span class="ptag div">External</span>
+            <span class="ptag spec">Read-Only</span>
+          </div>
+          <div class="pcard-why">Observes everything. Comments on everything. Touches nothing. 6 million forms of compliance documentation.</div>
+          <div class="pcard-moment">
+            <div class="moment-label">Demo Moment</div>
+            Read-only inspection view — audit-ready records, full traceability, zero editing rights.
+          </div>
+        </div>
+
+      </div><!-- /persona-grid -->
+    </div><!-- /persona-section -->
+
+
+    <!-- ── JAR JAR — TRAINING COMPLIANCE DEMO ── -->
+    <div class="persona-section">
+      <div class="section-title">The Bad Example — Training Compliance Demo</div>
+      <div class="jarjar-block">
+        <div class="jarjar-inner">
+          <div class="jarjar-avatar">🤦</div>
+          <div>
+            <div class="jarjar-name">Jar Jar Binks</div>
+            <div class="jarjar-username">jj.binks</div>
+            <div class="jarjar-role">Production Operator (untrained) — SCveris Pharma (FRA)</div>
+            <div class="jarjar-tags">
+              <span class="jarjar-tag site">FRA</span>
+              <span class="jarjar-tag site">SCveris Pharma</span>
+              <span class="jarjar-tag alert">Training Expired</span>
+              <span class="jarjar-tag alert">SOP-MFG-042 · 14 days overdue</span>
+            </div>
+          </div>
+        </div>
+        <div class="jarjar-script">
+          <span class="jarjar-quote">"Meesa ready to start production!"</span>
+          Log in as <code>jj.binks</code> → navigate to the active batch record → attempt to begin execution.<br/><br/>
+          MasterControl blocks the step: training on <strong>SOP-MFG-042 (Bioreactor Operation)</strong> expired 14 days ago. Access denied.<br/><br/>
+          Switch to <code>rey.jakku</code> — fully trained — batch proceeds immediately.
+          <div class="jarjar-punchline">The contrast tells the entire training compliance story in under 60 seconds.</div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /body -->
+
+  <!-- ══════════════════════════════════════
+       FOOTER
+  ══════════════════════════════════════ -->
+  <div class="footer">
+    <div class="footer-left">
+      <strong>SCveris Group AG</strong> &nbsp;·&nbsp;
+      Personas Reference — MasterControl Demo Instance &nbsp;·&nbsp;
+      <span style="color:var(--mid)">15 Users &nbsp;·&nbsp; September 2026</span>
+    </div>
+    <div class="footer-center">Powered by MasterControl</div>
+    <div class="footer-right">
+      For demonstration purposes only.<br/>
+      <span style="font-size:0.6rem;">All personas are fictional and created for the SCveris Group demo instance.</span>
+    </div>
+  </div>
+
+</div><!-- /page -->
+</body>
+</html>
+
+

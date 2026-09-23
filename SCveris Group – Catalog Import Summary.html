@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SCveris Group - MasterControl Catalog Import Summary</title>
+  <style>
+    :root {
+      --primary: #1a3a5c;
+      --accent: #2e7d32;
+      --border: #cfd8dc;
+      --bg-light: #f5f7fa;
+      --bg-white: #ffffff;
+      --text: #263238;
+      --text-muted: #607d8b;
+      --tag-bio: #e8f5e9;
+      --tag-bio-text: #2e7d32;
+      --tag-pharma: #e3f2fd;
+      --tag-pharma-text: #1565c0;
+      --tag-device: #fce4ec;
+      --tag-device-text: #c62828;
+      --tag-diag: #f3e5f5;
+      --tag-diag-text: #7b1fa2;
+      --tag-food: #fff3e0;
+      --tag-food-text: #e65100;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      color: var(--text);
+      background: var(--bg-light);
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 24px 20px;
+    }
+
+    /* Header */
+    .header {
+      background: var(--primary);
+      color: #fff;
+      padding: 32px 40px;
+      border-radius: 10px 10px 0 0;
+    }
+
+    .header h1 {
+      font-size: 1.6rem;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .header .subtitle {
+      font-size: 0.9rem;
+      opacity: 0.75;
+    }
+
+    /* Body card */
+    .body-card {
+      background: var(--bg-white);
+      border: 1px solid var(--border);
+      border-top: none;
+      border-radius: 0 0 10px 10px;
+      padding: 32px 40px 40px;
+    }
+
+    /* Section titles */
+    h2 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin: 32px 0 16px;
+      padding-bottom: 6px;
+      border-bottom: 2px solid var(--primary);
+    }
+
+    h2:first-child { margin-top: 0; }
+
+    h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text);
+      margin: 20px 0 10px;
+    }
+
+    /* Value set pills */
+    .pill-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 12px;
+    }
+
+    .pill {
+      display: inline-block;
+      background: var(--bg-light);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 3px 12px;
+      font-size: 0.82rem;
+    }
+
+    /* Tables */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 12px 0 20px;
+      font-size: 0.88rem;
+    }
+
+    thead th {
+      background: var(--primary);
+      color: #fff;
+      text-align: left;
+      padding: 10px 12px;
+      font-weight: 600;
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+
+    thead th:first-child { border-radius: 6px 0 0 0; }
+    thead th:last-child  { border-radius: 0 6px 0 0; }
+
+    tbody td {
+      padding: 9px 12px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+    }
+
+    tbody tr:nth-child(even) { background: var(--bg-light); }
+    tbody tr:last-child td { border-bottom: none; }
+
+    .site-code {
+      display: inline-block;
+      background: var(--primary);
+      color: #fff;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 4px;
+      letter-spacing: 0.5px;
+    }
+
+    .count-badge {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 10px;
+      min-width: 26px;
+      text-align: center;
+    }
+
+    .status-approved,
+    .status-active,
+    .status-pms {
+      display: inline-block;
+      font-size: 0.78rem;
+      font-weight: 600;
+      padding: 2px 10px;
+      border-radius: 10px;
+    }
+
+    .status-approved { background: #e8f5e9; color: #2e7d32; }
+    .status-active   { background: #e3f2fd; color: #1565c0; }
+    .status-pms      { background: #f3e5f5; color: #7b1fa2; }
+
+    /* Product type tags */
+    .tag {
+      display: inline-block;
+      font-size: 0.76rem;
+      font-weight: 600;
+      padding: 2px 10px;
+      border-radius: 10px;
+    }
+
+    .tag-bio    { background: var(--tag-bio);    color: var(--tag-bio-text); }
+    .tag-pharma { background: var(--tag-pharma); color: var(--tag-pharma-text); }
+    .tag-device { background: var(--tag-device); color: var(--tag-device-text); }
+    .tag-diag   { background: var(--tag-diag);   color: var(--tag-diag-text); }
+    .tag-food   { background: var(--tag-food);   color: var(--tag-food-text); }
+
+    /* Totals row */
+    .totals-row td {
+      font-weight: 700;
+      background: var(--bg-light) !important;
+      border-top: 2px solid var(--primary);
+    }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      margin-top: 24px;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    /* Print */
+    @media print {
+      body { background: #fff; }
+      .container { padding: 0; }
+      .header { border-radius: 0; }
+      .body-card { border: none; border-radius: 0; padding: 20px 0; }
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <!-- HEADER -->
+  <div class="header">
+    <h1>SCveris Group &ndash; MasterControl Catalog Import Summary</h1>
+    <div class="subtitle">Generated: September 2026 &nbsp;|&nbsp; SCveris Group Demo Instance</div>
+  </div>
+
+  <div class="body-card">
+
+    <!-- ========== VALUE SETS ========== -->
+    <h2>Value Sets</h2>
+
+    <h3>Equipment Types (29)</h3>
+    <div class="pill-list">
+      <span class="pill">Bioreactor</span>
+      <span class="pill">Chromatography System</span>
+      <span class="pill">UF/DF System</span>
+      <span class="pill">Cryogenic Storage</span>
+      <span class="pill">Hold Vessel</span>
+      <span class="pill">Formulation System</span>
+      <span class="pill">Isolator</span>
+      <span class="pill">Biosafety Cabinet</span>
+      <span class="pill">Granulator</span>
+      <span class="pill">Fluid Bed Dryer</span>
+      <span class="pill">Tablet Press</span>
+      <span class="pill">Tablet Coater</span>
+      <span class="pill">HPLC</span>
+      <span class="pill">Aseptic Filling Line</span>
+      <span class="pill">Lyophiliser</span>
+      <span class="pill">Inspection Machine</span>
+      <span class="pill">Autoclave</span>
+      <span class="pill">CNC Machining Centre</span>
+      <span class="pill">CMM</span>
+      <span class="pill">Ultrasonic Cleaner</span>
+      <span class="pill">Electropolishing Unit</span>
+      <span class="pill">Liquid Handler</span>
+      <span class="pill">Refrigerator</span>
+      <span class="pill">Kit Assembly Station</span>
+      <span class="pill">Encapsulator</span>
+      <span class="pill">Metal Detector</span>
+      <span class="pill">Forklift</span>
+      <span class="pill">Blender</span>
+      <span class="pill">Analytical Equipment</span>
+    </div>
+
+    <h3>Brands (11)</h3>
+    <div class="pill-list">
+      <span class="pill">Coagubind</span>
+      <span class="pill">SCverisMab-1</span>
+      <span class="pill">SCverisCell-T</span>
+      <span class="pill">SCverisGene-V</span>
+      <span class="pill">SCverisVax-R</span>
+      <span class="pill">SCverisFactor-8</span>
+      <span class="pill">SCverisDerm-T</span>
+      <span class="pill">SCverisPlasma-G</span>
+      <span class="pill">OrthoFlex</span>
+      <span class="pill">HelixPath</span>
+      <span class="pill">ProVital</span>
+    </div>
+
+    <!-- ========== CATALOG 1: SUPPLIERS ========== -->
+    <h2>1. Suppliers (29) &nbsp;<span class="status-approved">All Approved</span></h2>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Site</th>
+          <th>Suppliers</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="site-code">BAS</span></td>
+          <td>Sartorius AG, Cytiva, Pall Corporation, Panasonic Healthcare, GEA Group AG, Precision NanoSystems</td>
+        </tr>
+        <tr>
+          <td><span class="site-code">DUB</span></td>
+          <td>Extract Technology Ltd, Chart Industries, Eppendorf AG, Beckman Coulter, Thermo Fisher Scientific</td>
+        </tr>
+        <tr>
+          <td><span class="site-code">ZRH</span></td>
+          <td>DIOSNA Dierks und Soehne GmbH, Glatt GmbH, Korsch AG, Agilent Technologies</td>
+        </tr>
+        <tr>
+          <td><span class="site-code">FRA</span></td>
+          <td>Bausch und Stroebel GmbH, IMA Life, Seidenader GmbH, Getinge AB</td>
+        </tr>
+        <tr>
+          <td><span class="site-code">MCR</span></td>
+          <td>DMG Mori Co. Ltd, Hexagon Manufacturing Intelligence, Elma Schmidbauer GmbH, ESMA Ltd</td>
+        </tr>
+        <tr>
+          <td><span class="site-code">AMS</span></td>
+          <td>Hamilton Company, Videojet Technologies</td>
+        </tr>
+        <tr>
+          <td><span class="site-code">CPH</span></td>
+          <td>Syntegon Technology, IBC Shell Ltd, Mettler-Toledo International, Toyota Material Handling Europe</td>
+        </tr>
+        <tr class="totals-row">
+          <td></td>
+          <td>Total: 29 suppliers across 7 sites</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- ========== CATALOG 2: EQUIPMENT ========== -->
+    <h2>2. Equipment (43) &nbsp;<span class="status-active">All Active, Fit for Use</span></h2>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Site</th>
+          <th style="width:50px;text-align:center;">Qty</th>
+          <th>Equipment</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="site-code">BAS</span></td>
+          <td style="text-align:center;"><span class="count-badge">10</span></td>
+          <td>2x 2000L bioreactors, seed bioreactor, 2x chromatography skids, UF/DF system, 2x ULT freezers, viral inactivation tank, LNP formulation system</td>
+        </tr>
+        <tr>
+          <td><span class="site-code">DUB</span></td>
+          <td style="text-align:center;"><span class="count-badge">7</span></td>
+          <td>2x Grade A isolators, 2x LN2 cryostorage units, 200L bioreactor, analytical ultracentrifuge, tissue processing biosafety cabinet</td>
+        </tr>
+        <tr>
+          <td><span class="site-code">ZRH</span></td>
+          <td style="text-align:center;"><span class="count-badge">6</span></td>
+          <td>Granulator, fluid bed dryer, tablet press, tablet coater, 2x HPLC systems</td>
+        </tr>
+        <tr>
+          <td><span class="site-code">FRA</span></td>
+          <td style="text-align:center;"><span class="count-badge">4</span></td>
+          <td>Aseptic filling line, lyophiliser, inspection machine, autoclave</td>
+        </tr>
+        <tr>
+          <td><span class="site-code">MCR</span></td>
+          <td style="text-align:center;"><span class="count-badge">5</span></td>
+          <td>2x CNC machining centres, CMM, ultrasonic cleaner, electropolishing unit</td>
+        </tr>
+        <tr>
+          <td><span class="site-code">AMS</span></td>
+          <td style="text-align:center;"><span class="count-badge">4</span></td>
+          <td>2x liquid handlers, refrigerator, kit assembly station</td>
+        </tr>
+        <tr>
+          <td><span class="site-code">CPH</span></td>
+          <td style="text-align:center;"><span class="count-badge">5</span></td>
+          <td>2x encapsulators, blender, metal detector, forklift</td>
+        </tr>
+        <tr>
+          <td><span class="site-code">LYN</span></td>
+          <td style="text-align:center;"><span class="count-badge">3</span></td>
+          <td>Granulator, tablet press, blender</td>
+        </tr>
+        <tr class="totals-row">
+          <td></td>
+          <td style="text-align:center;">44</td>
+          <td>Total equipment across 8 sites</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- ========== CATALOG 3: PRODUCTS ========== -->
+    <h2>3. Products (11) &nbsp;<span class="status-pms">All Post Market Surveillance</span></h2>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Product</th>
+          <th>Type</th>
+          <th>Division</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Coagubind 50mg</strong></td>
+          <td><span class="tag tag-pharma">Pharmaceutical</span></td>
+          <td>SCveris Pharma</td>
+        </tr>
+        <tr>
+          <td><strong>SCverisMab-1</strong></td>
+          <td><span class="tag tag-bio">Biological</span></td>
+          <td>SCveris Biopharma</td>
+        </tr>
+        <tr>
+          <td><strong>SCverisCell-T</strong></td>
+          <td><span class="tag tag-bio">Biological</span></td>
+          <td>SCveris Biopharma</td>
+        </tr>
+        <tr>
+          <td><strong>SCverisGene-V</strong></td>
+          <td><span class="tag tag-bio">Biological</span></td>
+          <td>SCveris Biopharma</td>
+        </tr>
+        <tr>
+          <td><strong>SCverisVax-R</strong></td>
+          <td><span class="tag tag-bio">Biological</span></td>
+          <td>SCveris Biopharma</td>
+        </tr>
+        <tr>
+          <td><strong>SCverisFactor-8</strong></td>
+          <td><span class="tag tag-bio">Biological</span></td>
+          <td>SCveris Biopharma</td>
+        </tr>
+        <tr>
+          <td><strong>SCverisDerm-T</strong></td>
+          <td><span class="tag tag-bio">Biological</span></td>
+          <td>SCveris Biopharma</td>
+        </tr>
+        <tr>
+          <td><strong>SCverisPlasma-G</strong></td>
+          <td><span class="tag tag-bio">Biological</span></td>
+          <td>SCveris Biopharma</td>
+        </tr>
+        <tr>
+          <td><strong>OrthoFlex</strong></td>
+          <td><span class="tag tag-device">Medical Device</span></td>
+          <td>SCveris MedTech</td>
+        </tr>
+        <tr>
+          <td><strong>HelixPath</strong></td>
+          <td><span class="tag tag-diag">Diagnostic</span></td>
+          <td>SCveris Diagnostics</td>
+        </tr>
+        <tr>
+          <td><strong>ProVital</strong></td>
+          <td><span class="tag tag-food">Food Supplement</span></td>
+          <td>SCveris Nutrition</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- ========== CATALOG 4: PRODUCT SKUS ========== -->
+    <h2>4. Product SKUs (11) &nbsp;<span class="status-active">All Active</span></h2>
+
+    <p style="font-size:0.9rem; color: var(--text-muted); margin-top: 8px;">
+      One SKU per product. Type and brand mirror the parent product. Sequential SKU IDs with site-coded external IDs.
+    </p>
+
+  </div><!-- /body-card -->
+
+  <div class="footer">
+    SCveris Group Demo Instance &ndash; MasterControl &nbsp;|&nbsp; September 2026
+  </div>
+
+</div>
+</body>
+</html>
+
+

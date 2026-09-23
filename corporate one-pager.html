@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SCveris Group AG Corporate Overview</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --navy:#0B1F3A; --blue:#1A4B8C; --accent:#2E7FD4; --light:#E8F0FA;
+      --silver:#C8D5E8; --mid:#6B82A0; --white:#FFFFFF; --text:#1C2B3A;
+      --muted:#4A6080; --border:#D0DCEC;
+    }
+    html { font-size: 14px; }
+    body { font-family:'Inter','Helvetica Neue',sans-serif; background:#F0F4FA; color:var(--text); line-height:1.55; padding:32px 20px; }
+    .page { max-width:1020px; margin:0 auto; background:var(--white); box-shadow:0 4px 32px rgba(11,31,58,0.13); }
+    .header { display:flex; align-items:stretch; break-inside:avoid; page-break-inside:avoid; break-after:avoid; page-break-after:avoid; }
+    .header-logo { background:var(--white); padding:14px 28px; display:flex; align-items:center; flex-shrink:0; border-right:4px solid var(--accent); }
+    .logo-type { display:flex; flex-direction:column; line-height:1; gap:2px; }
+    .logo-main { display:flex; align-items:baseline; }
+    .logo-sc { font-size:3.2rem; font-weight:800; color:var(--navy); letter-spacing:-2px; line-height:1; }
+    .logo-veris { font-size:1.6rem; font-weight:300; color:var(--accent); letter-spacing:1px; line-height:1; padding-bottom:4px; }
+    .logo-group { font-size:0.6rem; font-weight:600; letter-spacing:4px; text-transform:uppercase; color:var(--mid); padding-left:2px; }
+    .header-right { background:var(--navy); flex:1; padding:20px 40px; display:flex; flex-direction:column; align-items:flex-end; justify-content:center; gap:10px; }
+    .tagline { font-style:italic; font-size:1.05rem; font-weight:300; color:var(--silver); }
+    .ticker { display:inline-block; background:rgba(46,127,212,0.18); border:1px solid var(--accent); color:var(--accent); font-size:0.72rem; font-weight:700; letter-spacing:1.5px; padding:4px 12px; border-radius:3px; text-transform:uppercase; }
+    .stripe { background:var(--blue); display:grid; grid-template-columns:repeat(4,1fr); break-inside:avoid; page-break-inside:avoid; break-before:avoid; page-break-before:avoid; }
+    .stat { padding:18px 24px; text-align:center; border-right:1px solid rgba(255,255,255,0.1); }
+    .stat:last-child { border-right:none; }
+    .stat-value { font-size:1.6rem; font-weight:800; color:var(--white); line-height:1; }
+    .stat-label { font-size:0.68rem; font-weight:500; color:var(--silver); letter-spacing:1.2px; text-transform:uppercase; margin-top:4px; }
+    .body { padding:40px 48px; }
+    .intro { display:grid; grid-template-columns:1fr 1fr; gap:40px; margin-bottom:40px; padding-bottom:40px; border-bottom:1px solid var(--border); break-inside:avoid; page-break-inside:avoid; }
+    .intro-text h2 { font-size:1.15rem; font-weight:700; color:var(--navy); margin-bottom:12px; text-transform:uppercase; letter-spacing:0.8px; }
+    .intro-text p { color:var(--muted); font-size:0.9rem; line-height:1.7; }
+    .glance-table { width:100%; border-collapse:collapse; }
+    .glance-table tr { border-bottom:1px solid var(--border); }
+    .glance-table tr:last-child { border-bottom:none; }
+    .glance-table td { padding:7px 4px; font-size:0.85rem; vertical-align:top; }
+    .glance-table td:first-child { font-weight:600; color:var(--blue); width:42%; white-space:nowrap; }
+    .glance-table td:last-child { color:var(--text); }
+    .section-title { font-size:0.72rem; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--accent); margin-bottom:16px; break-after:avoid; page-break-after:avoid; }
+    .divisions { display:grid; grid-template-columns:2fr 1fr 1fr 1fr; gap:12px; margin-bottom:40px; padding-bottom:40px; border-bottom:1px solid var(--border); break-inside:avoid; page-break-inside:avoid; }
+    .division-pharma-wrapper { border:1px solid var(--border); background:#FAFCFF; display:flex; flex-direction:column; break-inside:avoid; page-break-inside:avoid; }
+    .pharma-header { padding:8px 14px 6px; border-bottom:1px solid var(--border); display:flex; align-items:center; gap:8px; }
+    .pharma-header-name { font-size:0.85rem; font-weight:800; color:var(--navy); letter-spacing:0.2px; }
+    .pharma-header-tag { font-size:0.6rem; font-weight:600; letter-spacing:1px; text-transform:uppercase; color:var(--mid); background:var(--light); border:1px solid var(--border); padding:1px 6px; border-radius:2px; }
+    .pharma-inner { display:grid; grid-template-columns:1fr 1fr; flex:1; }
+    .pharma-sub { padding:12px 14px; position:relative; }
+    .pharma-sub + .pharma-sub { border-left:1px dashed var(--border); }
+    .pharma-sub-sm::before { content:''; display:block; height:3px; background:#1A6EB5; margin:-12px -14px 10px -14px; }
+    .pharma-sub-bio::before { content:''; display:block; height:3px; background:#0E7E82; margin:-12px -14px 10px -14px; }
+    .division-card { border:1px solid var(--border); border-top:3px solid var(--accent); padding:14px; background:#FAFCFF; break-inside:avoid; page-break-inside:avoid; }
+    .division-card.medtech { border-top-color:#167A5E; }
+    .division-card.diag { border-top-color:#7A3D8A; }
+    .division-card.nutr { border-top-color:#B8632C; }
+    .division-name { font-size:0.82rem; font-weight:700; color:var(--navy); margin-bottom:4px; }
+    .division-sub-label { font-size:0.68rem; font-weight:600; color:var(--accent); margin-bottom:4px; }
+    .division-industry { font-size:0.68rem; font-weight:500; color:var(--mid); text-transform:uppercase; letter-spacing:0.8px; margin-bottom:8px; }
+    .division-product { font-size:0.75rem; color:var(--muted); margin-bottom:3px; }
+    .division-product strong { color:var(--text); font-weight:600; }
+    .reg-tags { display:flex; flex-wrap:wrap; gap:3px; margin-top:8px; }
+    .reg-tag { font-size:0.58rem; font-weight:600; padding:2px 5px; border-radius:2px; background:var(--light); color:var(--blue); border:1px solid var(--silver); }
+    .sites-section { margin-bottom:40px; padding-bottom:40px; border-bottom:1px solid var(--border); break-inside:avoid; page-break-inside:avoid; }
+    .sites-grid { display:grid; grid-template-columns:repeat(5,1fr); gap:8px; }
+    .site-card { background:var(--light); border:1px solid var(--border); padding:10px 12px; display:flex; flex-direction:column; gap:2px; break-inside:avoid; page-break-inside:avoid; }
+    .site-code { font-size:1rem; font-weight:800; color:var(--navy); letter-spacing:1px; }
+    .site-city { font-size:0.72rem; color:var(--muted); font-weight:500; }
+    .site-flag { font-size:0.85rem; }
+    .site-divisions { font-size:0.65rem; color:var(--accent); font-weight:600; margin-top:2px; }
+    .priorities-section { margin-bottom:40px; padding-bottom:40px; border-bottom:1px solid var(--border); break-inside:avoid; page-break-inside:avoid; }
+    .priorities-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+    .priority-item { display:flex; gap:12px; align-items:flex-start; break-inside:avoid; page-break-inside:avoid; }
+    .priority-icon { width:34px; height:34px; background:var(--navy); border-radius:4px; display:flex; align-items:center; justify-content:center; flex-shrink:0; color:var(--accent); font-size:0.72rem; font-weight:800; text-align:center; line-height:1.1; }
+    .priority-text strong { display:block; font-size:0.82rem; font-weight:700; color:var(--navy); margin-bottom:2px; }
+    .priority-text span { font-size:0.76rem; color:var(--muted); line-height:1.5; }
+    .reg-section { margin-bottom:40px; break-inside:avoid; page-break-inside:avoid; }
+    .reg-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; }
+    .reg-block { padding:14px; border:1px solid var(--border); background:#FAFCFF; break-inside:avoid; page-break-inside:avoid; }
+    .reg-block-name { font-size:0.72rem; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:var(--blue); margin-bottom:8px; }
+    .reg-block ul { list-style:none; }
+    .reg-block li { font-size:0.72rem; color:var(--muted); padding:2px 0 2px 10px; position:relative; }
+    .reg-block li::before { content:'\2014'; position:absolute; left:0; color:var(--silver); font-size:0.65rem; }
+    .footer { background:var(--navy); padding:20px 48px; display:flex; align-items:center; justify-content:space-between; gap:16px; break-inside:avoid; page-break-inside:avoid; }
+    .footer-left { font-size:0.75rem; color:var(--silver); }
+    .footer-left strong { color:var(--white); font-weight:700; }
+    .footer-right { font-size:0.68rem; color:var(--mid); text-align:right; font-style:italic; }
+    .mastercontrol-badge { display:inline-flex; align-items:center; gap:6px; background:rgba(46,127,212,0.15); border:1px solid rgba(46,127,212,0.4); border-radius:3px; padding:4px 12px; font-size:0.7rem; font-weight:600; color:var(--accent); letter-spacing:0.5px; text-transform:uppercase; }
+    @page { margin:12mm; }
+    @media print {
+      body { background:#fff; padding:0; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+      .page { box-shadow:none; max-width:100%; }
+      .header,.stripe,.intro,.divisions,.division-pharma-wrapper,.division-card,.sites-section,.site-card,.priorities-section,.priority-item,.reg-section,.reg-block,.footer { break-inside:avoid; page-break-inside:avoid; }
+      .header { break-after:avoid; page-break-after:avoid; }
+      .stripe { break-before:avoid; page-break-before:avoid; }
+      .section-title { break-after:avoid; page-break-after:avoid; }
+    }
+    @media (max-width:800px) {
+      .header { flex-direction:column; }
+      .header-logo { border-right:none; border-bottom:4px solid var(--accent); justify-content:center; padding:16px 24px; }
+      .header-right { align-items:flex-start; padding:16px 24px; }
+      .logo-sc { font-size:2.4rem; }
+      .logo-veris { font-size:1.2rem; }
+      .stripe { grid-template-columns:repeat(2,1fr); }
+      .intro { grid-template-columns:1fr; }
+      .divisions { grid-template-columns:1fr 1fr; }
+      .division-pharma-wrapper { grid-column:span 2; }
+      .sites-grid { grid-template-columns:repeat(3,1fr); }
+      .priorities-grid { grid-template-columns:repeat(2,1fr); }
+      .reg-grid { grid-template-columns:repeat(2,1fr); }
+      .body { padding:28px 24px; }
+      .footer { padding:16px 24px; flex-direction:column; align-items:flex-start; }
+    }
+  </style>
+</head><body>
+<div class="page">
+  <div class="header">
+    <div class="header-logo">
+      <div class="logo-type">
+        <div class="logo-main">
+          <span class="logo-sc">SC</span><span class="logo-veris">veris</span>
+        </div>
+        <div class="logo-group">Group AG</div>
+      </div>
+    </div>
+    <div class="header-right">
+      <div class="tagline">"Advancing quality. Everywhere."</div>
+      <div class="ticker">Erik's Mock Demo Company</div>
+    </div>
+  </div>
+  <div class="stripe">
+    <div class="stat"><div class="stat-value">€4.2B</div><div class="stat-label">Annual Revenue</div></div>
+    <div class="stat"><div class="stat-value">~18,000</div><div class="stat-label">Employees Globally</div></div>
+    <div class="stat"><div class="stat-value">9 Sites</div><div class="stat-label">7 EMEA Countries</div></div>
+    <div class="stat"><div class="stat-value">4</div><div class="stat-label">Regulated Divisions</div></div>
+  </div>
+  <div class="body">
+    <div class="intro">
+      <div class="intro-text">
+        <h2>About SCveris Group</h2>
+        <p>SCveris Group AG is a publicly listed, EMEA-headquartered diversified life sciences and regulated manufacturing conglomerate, incorporated under Swiss law and domiciled in Zurich. Founded in 1987 as a contract pharmaceutical manufacturer, the Group operates across four regulated industries: pharmaceutical &amp; biotech (including a dedicated biopharma arm covering biologics, cell &amp; gene therapy, vaccines, plasma, and tissue products), medical devices, in vitro diagnostics, and food &amp; beverage.</p>
+        <p style="margin-top:12px;">With a unified commitment to quality, compliance, and operational excellence, SCveris Group has selected <strong>MasterControl</strong> as its enterprise platform for Manufacturing Excellence (Mx / EBR), Quality Excellence (Qx / QMS), and Asset Excellence (Ax / CMMS) across all sites and divisions.</p>
+      </div>
+      <div>
+        <h2 style="font-size:1.15rem;font-weight:700;color:var(--navy);margin-bottom:12px;text-transform:uppercase;letter-spacing:0.8px;">At a Glance</h2>
+        <table class="glance-table">
+          <tr><td>Legal Name</td><td>SCveris Group AG</td></tr>
+          <tr><td>Headquarters</td><td>Zurich, Switzerland</td></tr>
+          <tr><td>Founded</td><td>1987</td></tr>
+          <tr><td>Listed</td><td>SIX Swiss Exchange, SCVR</td></tr>
+          <tr><td>Employees</td><td>~18,000 globally</td></tr>
+          <tr><td>Revenue</td><td>~€4.2 billion</td></tr>
+          <tr><td>Sites</td><td>9 sites across 7 EMEA countries</td></tr>
+          <tr><td>Platform</td><td>MasterControl Mx · Qx · Ax</td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="section-title">Our Divisions</div>
+    <div class="divisions">
+      <div class="division-pharma-wrapper">
+        <div class="pharma-header">
+          <span class="pharma-header-name">SCveris Pharma</span>
+          <span class="pharma-header-tag">2 Operating Arms</span>
+        </div>
+        <div class="pharma-inner">
+          <div class="pharma-sub pharma-sub-sm">
+            <div class="division-sub-label">Small Molecule</div>
+            <div class="division-industry">Traditional Pharma</div>
+            <div class="division-product"><strong>Coagubind® 50mg</strong> — OSD Tablet</div>
+            <div class="reg-tags">
+              <span class="reg-tag">EU GMP</span>
+              <span class="reg-tag">21 CFR Pt 11</span>
+              <span class="reg-tag">Annex 11</span>
+              <span class="reg-tag">Annex 16</span>
+            </div>
+          </div>
+          <div class="pharma-sub pharma-sub-bio">
+            <div class="division-sub-label">Biopharma</div>
+            <div class="division-industry">Biologics · CGT · Vaccines</div>
+            <div class="division-product"><strong>SCverisMab-1™</strong> — mAb</div>
+            <div class="division-product"><strong>SCverisCell-T™</strong> — CAR-T (1-of-1)</div>
+            <div class="division-product"><strong>SCverisVax-R™</strong> — mRNA Vaccine</div>
+            <div class="division-product"><strong>SCverisGene-V™</strong> — AAV Vector</div>
+            <div class="reg-tags">
+              <span class="reg-tag">EU GMP Annex 1&amp;2</span>
+              <span class="reg-tag">ATMP 1394/2007</span>
+              <span class="reg-tag">EUTCD</span>
+              <span class="reg-tag">ICH Q5</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="division-card medtech">
+        <div class="division-name">SCveris MedTech</div>
+        <div class="division-industry">Medical Devices</div>
+        <div class="division-product"><strong>OrthoFlex™</strong> — Knee Implant</div>
+        <div class="reg-tags">
+          <span class="reg-tag">ISO 13485</span>
+          <span class="reg-tag">EU MDR</span>
+          <span class="reg-tag">21 CFR 820</span>
+        </div>
+      </div>
+      <div class="division-card diag">
+        <div class="division-name">SCveris Diagnostics</div>
+        <div class="division-industry">In Vitro Diagnostics</div>
+        <div class="division-product"><strong>HelixPath™</strong> — IVD Reagent Kit</div>
+        <div class="reg-tags">
+          <span class="reg-tag">ISO 13485</span>
+          <span class="reg-tag">IVDR</span>
+          <span class="reg-tag">21 CFR 820</span>
+        </div>
+      </div>
+      <div class="division-card nutr">
+        <div class="division-name">SCveris Nutrition</div>
+        <div class="division-industry">Food &amp; Beverage</div>
+        <div class="division-product"><strong>ProVital™</strong> — Nutritional Capsule</div>
+        <div class="reg-tags">
+          <span class="reg-tag">ISO 22000</span>
+          <span class="reg-tag">HACCP</span>
+          <span class="reg-tag">FDA</span>
+          <span class="reg-tag">ISO 9001</span>
+        </div>
+      </div>
+    </div>
+    <div class="sites-section">
+      <div class="section-title">Global Footprint — 9 Sites across EMEA</div>
+      <div class="sites-grid">
+        <div class="site-card"><div class="site-flag">🇨🇭</div><div class="site-code">ZRH</div><div class="site-city">Zurich, Switzerland</div><div class="site-divisions">Group HQ · Pharma SM</div></div>
+        <div class="site-card"><div class="site-flag">🇨🇭</div><div class="site-code">BAS</div><div class="site-city">Basel, Switzerland</div><div class="site-divisions">Biopharma — Biologics</div></div>
+        <div class="site-card"><div class="site-flag">🇩🇪</div><div class="site-code">FRA</div><div class="site-city">Frankfurt, Germany</div><div class="site-divisions">Pharma SM · Bio Fill &amp; Finish</div></div>
+        <div class="site-card"><div class="site-flag">🇮🇪</div><div class="site-code">DUB</div><div class="site-city">Dublin, Ireland</div><div class="site-divisions">Biopharma — CGT · Gene · Tissues</div></div>
+        <div class="site-card"><div class="site-flag">🇬🇧</div><div class="site-code">MCR</div><div class="site-city">Manchester, UK</div><div class="site-divisions">MedTech</div></div>
+        <div class="site-card"><div class="site-flag">🇫🇷</div><div class="site-code">LYN</div><div class="site-city">Lyon, France</div><div class="site-divisions">Pharma SM · Nutrition</div></div>
+        <div class="site-card"><div class="site-flag">🇳🇱</div><div class="site-code">AMS</div><div class="site-city">Amsterdam, Netherlands</div><div class="site-divisions">Diagnostics · Supply Chain</div></div>
+        <div class="site-card"><div class="site-flag">🇮🇹</div><div class="site-code">MIL</div><div class="site-city">Milan, Italy</div><div class="site-divisions">MedTech · Regulatory</div></div>
+        <div class="site-card"><div class="site-flag">🇩🇰</div><div class="site-code">CPH</div><div class="site-city">Copenhagen, Denmark</div><div class="site-divisions">Nutrition</div></div>
+      </div>
+    </div>
+    <div class="priorities-section">
+      <div class="section-title">Digital Manufacturing Priorities</div>
+      <div class="priorities-grid">
+        <div class="priority-item"><div class="priority-icon">EBR<br>Mx</div><div class="priority-text"><strong>Paperless Electronic Batch Records</strong><span>Across all sites and dosage forms, from high-volume OSD to 1-of-1 CAR-T cell therapy.</span></div></div>
+        <div class="priority-item"><div class="priority-icon">RBR<br>Mx</div><div class="priority-text"><strong>Risk-Based Release</strong><span>Enabling QPs and QA leadership to make faster, better-informed batch disposition decisions.</span></div></div>
+        <div class="priority-item"><div class="priority-icon">QMS<br>Qx</div><div class="priority-text"><strong>Native EBR-QMS Integration</strong><span>SOPs, training records, and specifications linked directly to manufacturing execution steps.</span></div></div>
+        <div class="priority-item"><div class="priority-icon">BI<br>Ax</div><div class="priority-text"><strong>Business Intelligence &amp; Analytics</strong><span>Live KPIs, deviation trends, and CAPA dashboards from shop floor to boardroom.</span></div></div>
+        <div class="priority-item"><div class="priority-icon">CMMS<br>Ax</div><div class="priority-text"><strong>Equipment Logbooks &amp; Asset Excellence</strong><span>Maintenance and equipment status connected to manufacturing execution in real time.</span></div></div>
+        <div class="priority-item"><div class="priority-icon">CGT<br>Mx</div><div class="priority-text"><strong>1-of-1 &amp; Biologics Manufacturing</strong><span>Chain-of-identity for CAR-T, lot genealogy for AAV vectors, cold chain for vaccines and plasma.</span></div></div>
+      </div>
+    </div>
+    <div class="reg-section">
+      <div class="section-title">Regulatory Scope</div>
+      <div class="reg-grid">
+        <div class="reg-block"><div class="reg-block-name">Pharma &amp; Biopharma</div><ul><li>EU GMP · Annex 1 &amp; 2</li><li>21 CFR Part 11</li><li>Annex 11 · Annex 16</li><li>ATMP Reg 1394/2007</li><li>ICH Q5</li><li>EUTCD · EU Blood Dir. 2002/98/EC</li></ul></div>
+        <div class="reg-block"><div class="reg-block-name">Medical Devices</div><ul><li>ISO 13485</li><li>EU MDR</li><li>21 CFR Part 820</li></ul></div>
+        <div class="reg-block"><div class="reg-block-name">In Vitro Diagnostics</div><ul><li>ISO 13485</li><li>IVDR</li><li>21 CFR Part 820</li></ul></div>
+        <div class="reg-block"><div class="reg-block-name">Food &amp; Beverage</div><ul><li>ISO 22000</li><li>HACCP</li><li>FDA</li><li>ISO 9001</li></ul></div>
+      </div>
+    </div>
+  </div>
+  <div class="footer">
+    <div class="footer-left"><strong>SCveris Group AG</strong> &nbsp;·&nbsp; Rämistrasse 14, 8001 Zurich, Switzerland &nbsp;·&nbsp; <span style="color:var(--mid)">info@scveris-group.com</span> &nbsp;·&nbsp; <span style="color:var(--mid)">www.scveris.com</span></div>
+    <div><span class="mastercontrol-badge">Powered by MasterControl</span></div>
+    <div class="footer-right">Corporate Overview — FY 2026<br/><span style="font-size:0.62rem;">For demonstration purposes only.</span></div>
+  </div>
+</div>
+</body>
+</html>
+
+
+
+
+
